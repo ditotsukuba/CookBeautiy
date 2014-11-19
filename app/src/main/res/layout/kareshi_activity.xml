@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <ImageView
+        android:layout_width="@dimen/picture_size"
+        android:layout_height="@dimen/picture_size"
+        android:id="@+id/guy"
+        android:src="@drawable/cookbeauty_guy"
+        android:layout_gravity="left"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="彼氏の名前"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:id="@+id/kareshi_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好きなジャンル"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_name"
+        android:id="@+id/kareshi_favorite_genre" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好きなメニュー"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_favorite_genre"
+        android:id="@+id/kareshi_favorite_menu" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="アレルギー"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_favorite_menu"
+        android:id="@+id/kareshi_favorite_allergy" />
+
+    <!--
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/menu_genre"
+        android:layout_alignTop="@+id/kareshi_favorite_genre"
+        android:layout_toRightOf="@+id/kareshi_favorite_genre"
+        android:layout_toEndOf="@+id/kareshi_favorite_genre"
+        tools:listitem="@android:layout/simple_expandable_list_item_1" />
+    -->
+
+</RelativeLayout>
+

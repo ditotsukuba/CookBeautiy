@@ -58,9 +58,9 @@ public class MenuActivity extends Activity {
                 setContentView(tv);
             }
             else if( (int)(endX*(3.0/Num)) <= pointX & pointX < endX){
-                TextView tv = new TextView(this);
-                tv.setText("settei!!");
-                setContentView(tv);
+                Intent intent = new Intent(getApplication(), KareshiActivity.class);
+                startActivity(intent);
+                MenuActivity.this.finish();
             }
         }
 

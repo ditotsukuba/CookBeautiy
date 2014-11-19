@@ -38,7 +38,7 @@ public class MainActivity extends Activity{
         int endX = (int) (0.92 * windowX);  //タブ端のX座標
         int endY = (int) (0.12 * windowY);
 
-        Log.d("TouchEvent", "X:" + pointX + ",Y:" + pointY);
+        //Log.d("TouchEvent", "X:" + pointX + ",Y:" + pointY);
         //Log.d("window", "X:" + windowX + ",Y:" + windowY);
 
 
@@ -59,10 +59,12 @@ public class MainActivity extends Activity{
                 setContentView(tv);*/
                 Log.d("hayayome", "");
             } else if ((int) (endX * (3.0 / Num)) <= pointX & pointX < endX) {
+                Intent intent = new Intent(getApplication(), KareshiActivity.class);
+                startActivity(intent);
                 /*TextView tv = new TextView(this);
                 tv.setText("settei!!");
                 setContentView(tv);*/
-                Log.d("settei", "");
+
             }
         }
 
