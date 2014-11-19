@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="20.0.0" >
+        <source path="D:\CookBeauty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="D:\CookBeauty\app\src\main\res" >
+            <file
+                name="animejanai"
+                path="D:\CookBeauty\app\src\main\res\anim\animejanai.xml"
+                qualifiers=""
+                type="anim" />
+            <file
+                name="cookbeauty_tab1"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\cookbeauty_tab1.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="cookbeauty_tab2"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\cookbeauty_tab2.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="cookbeauty_tab3"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\cookbeauty_tab3.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="cookbeauty_tab4"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\cookbeauty_tab4.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="icon"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\icon.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page1"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page1.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page2"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page2.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page3"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page3.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page4"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page4.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page5"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page5.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page6"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page6.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id1page7"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id1page7.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page1"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page1.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page10"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page10.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page11"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page11.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page2"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page2.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page3"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page3.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page4"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page4.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page5"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page5.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page6"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page6.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page7"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page7.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page8"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page8.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id2page9"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id2page9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page1"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page1.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page2"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page2.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page3"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page3.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page4"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page4.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page5"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page5.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page6"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page6.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page7"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page7.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="id3page8"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\id3page8.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="opening"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\opening.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="title"
+                path="D:\CookBeauty\app\src\main\res\drawable-hdpi\title.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\CookBeauty\app\src\main\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\CookBeauty\app\src\main\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\CookBeauty\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="list_activity"
+                path="D:\CookBeauty\app\src\main\res\layout\list_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="menu_activity"
+                path="D:\CookBeauty\app\src\main\res\layout\menu_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="opening_activity"
+                path="D:\CookBeauty\app\src\main\res\layout\opening_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="recipe_activity"
+                path="D:\CookBeauty\app\src\main\res\layout\recipe_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="ribbon_layout"
+                path="D:\CookBeauty\app\src\main\res\layout\ribbon_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="title_activity"
+                path="D:\CookBeauty\app\src\main\res\layout\title_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list"
+                path="D:\CookBeauty\app\src\main\res\menu\list.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="menu"
+                path="D:\CookBeauty\app\src\main\res\menu\menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="recipe"
+                path="D:\CookBeauty\app\src\main\res\menu\recipe.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="title"
+                path="D:\CookBeauty\app\src\main\res\menu\title.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                path="D:\CookBeauty\app\src\main\res\values\attrs.xml"
+                qualifiers="" >
+                <declare-styleable name="ButtonBarContainerTheme" >
+                    <attr
+                        name="metaButtonBarStyle"
+                        format="reference" />
+                    <attr
+                        name="metaButtonBarButtonStyle"
+                        format="reference" />
+                </declare-styleable>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values\colors.xml"
+                qualifiers="" >
+                <color name="black_overlay" >#66000000
+                </color>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values\dimens.xml"
+                qualifiers="" >
+                <dimen name="activity_vertical_margin" >16dp
+                </dimen>
+                <dimen name="activity_horizontal_margin" >16dp
+                </dimen>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values\strings.xml"
+                qualifiers="" >
+                <string name="hello_world" >Hello world!
+                </string>
+                <string name="title_activity_list" >List
+                </string>
+                <string name="title_activity_menu" >Menu
+                </string>
+                <string name="title_activity_title" >Title
+                </string>
+                <string name="dummy_button" >Dummy Button
+                </string>
+                <string name="action_settings" >Settings
+                </string>
+                <string name="app_name" >CookBeauty
+                </string>
+                <string name="title_activity_recipe" >RecipeActivity
+                </string>
+                <string name="dummy_content" >DUMMY\nCONTENT
+                </string>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values\styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="AppTheme"
+                    parent="android:Theme.Holo.Light.DarkActionBar" >
+
+                    <!-- Customize your theme here. -->
+                </style>
+
+                <style name="ButtonBarButton" />
+
+                <style name="ButtonBar" >
+                    <item name="android:paddingLeft">
+2dp
+                    </item>
+                    <item name="android:paddingTop">
+5dp
+                    </item>
+                    <item name="android:paddingRight">
+2dp
+                    </item>
+                    <item name="android:paddingBottom">
+0dp
+                    </item>
+                    <item name="android:background">
+@android:drawable/bottom_bar
+                    </item>
+                </style>
+
+                <style
+                    name="FullscreenTheme"
+                    parent="android:Theme.NoTitleBar" >
+                    <item name="android:windowContentOverlay">
+@null
+                    </item>
+                    <item name="android:windowBackground">
+@null
+                    </item>
+                    <item name="metaButtonBarStyle">
+@style/ButtonBar
+                    </item>
+                    <item name="metaButtonBarButtonStyle">
+@style/ButtonBarButton
+                    </item>
+                </style>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values-v11\styles.xml"
+                qualifiers="v11" >
+
+                <style
+                    name="FullscreenTheme"
+                    parent="android:Theme.Holo" >
+                    <item name="android:actionBarStyle">
+@style/FullscreenActionBarStyle
+                    </item>
+                    <item name="android:windowActionBarOverlay">
+true
+                    </item>
+                    <item name="android:windowBackground">
+@null
+                    </item>
+                    <item name="metaButtonBarStyle">
+?android:attr/buttonBarStyle
+                    </item>
+                    <item name="metaButtonBarButtonStyle">
+?android:attr/buttonBarButtonStyle
+                    </item>
+                </style>
+
+                <style
+                    name="FullscreenActionBarStyle"
+                    parent="android:Widget.Holo.ActionBar" >
+                    <item name="android:background">
+@color/black_overlay
+                    </item>
+                </style>
+            </file>
+            <file
+                path="D:\CookBeauty\app\src\main\res\values-w820dp\dimens.xml"
+                qualifiers="w820dp-v13" >
+                <dimen name="activity_horizontal_margin" >64dp
+                </dimen>
+            </file>
+        </source>
+        <source path="D:\CookBeauty\app\build\generated\res\rs\debug" />
+        <source path="D:\CookBeauty\app\build\generated\res\generated\debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="D:\CookBeauty\app\src\debug\res" />
+    </dataSet>
+
+</merger>

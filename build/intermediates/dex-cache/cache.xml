@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="D:\CookBeauty\app\build\intermediates\pre-dexed\debug\classes-052da0bfb4bdbdd9d336ccc4a7fd5c3ec931a870.jar"
+        jar="D:\CookBeauty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="D:\CookBeauty\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-5f48ba879bc2cdc1eaed88934f04d1f5b8e1cdc6.jar"
+        jar="C:\Users\Daisuke\AppData\Local\Android\android-studio1\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="D:\CookBeauty\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-66f897205078e53f9b77828497affd4dd2840c7a.jar"
+        jar="D:\CookBeauty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+
+</pre-dex-items>
