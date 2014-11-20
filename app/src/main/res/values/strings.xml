@@ -14,5 +14,7 @@
     <string name="title_activity_recipe">Recipe</string>
     <string name="title_activity_kareshi">Kareshi</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_frame">Frame</string>
+
 
 </resources>

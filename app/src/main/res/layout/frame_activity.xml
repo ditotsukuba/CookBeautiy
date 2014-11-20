@@ -12,18 +12,17 @@
         android:scaleType="centerCrop"
         android:src="@drawable/tab1">
     </ImageView>
-    
-    <fragment
-        android:id ="@+id/f_list"
+
+    <FrameLayout
+        android:id ="@+id/tab_content"
         android:layout_width="fill_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="40dp">
 
-        tools:layout="@layout/fragment_list">
-     </fragment>
+     </FrameLayout>
 
 
 
