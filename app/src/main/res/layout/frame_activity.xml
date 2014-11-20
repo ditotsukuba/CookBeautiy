@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/cookbeauty_tab1">
+        android:src="@drawable/tab1">
     </ImageView>
     
     <fragment
