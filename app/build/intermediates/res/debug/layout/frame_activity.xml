@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cookbeauty_tab1">
+    </ImageView>
+    
+    <fragment
+        android:id ="@+id/f_list"
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="45dp"
+
+        tools:layout="@layout/fragment_list">
+     </fragment>
+
+
+
+</FrameLayout>
+<!-- From: file:/D:/My%20Documents/Documents/CookBeauty/app/src/main/res/layout/frame_activity.xml -->
