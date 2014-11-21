@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+    <ImageView
+        android:layout_width="@dimen/picture_size"
+        android:layout_height="@dimen/picture_size"
+        android:id="@+id/guy"
+        android:src="@drawable/cookbeauty_guy"
+        android:layout_gravity="left"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="彼氏の名前"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:id="@+id/kareshi_name" />
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_name"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好きなジャンル"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/edit_name"
+        android:id="@+id/kareshi_favorite_genre" />
+
+    <RadioGroup
+        android:id="@+id/favorite_genre_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kareshi_favorite_genre"
+        android:layout_toRightOf="@id/guy"
+        >
+
+        <RadioButton
+            android:id="@+id/japanese"
+            android:text="和"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/europe"
+            android:text="洋"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/chinese"
+            android:text="中"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
+       <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好きなメニュー"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/favorite_genre_group"
+        android:id="@+id/kareshi_favorite_menu" />
+
+    <Spinner
+        android:id="@+id/kareshi_favorite_menu_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_favorite_menu">
+
+        </Spinner>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="アレルギー"
+        android:textSize="@dimen/midium_text_size_kareshi"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_favorite_menu_group"
+        android:id="@+id/kareshi_favorite_allergy" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/guy"
+        android:layout_below="@id/kareshi_favorite_allergy">
+
+        <CheckBox
+            android:id="@+id/allergy01"
+            android:text="たまご"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox
+            android:id="@+id/allergy02"
+            android:text="ミルク"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <CheckBox
+            android:id="@+id/allergy03"
+            android:text="小麦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登録"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>
