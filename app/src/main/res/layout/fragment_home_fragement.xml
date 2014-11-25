@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cookhat.cookbeauty.HomeFragement">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/cookbeauty_heart"
+        android:id="@+id/heart"
+        android:layout_gravity="center"
+        android:layout_weight="0.97" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/girl"
+        android:src="@drawable/cookbeauty_girl"
+        android:layout_gravity="center"
+        android:layout_marginRight="220dp" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/guy"
+        android:src="@drawable/cookbeauty_guy"
+        android:layout_gravity="center"
+        android:layout_marginLeft="200dp" />
+
+</FrameLayout>

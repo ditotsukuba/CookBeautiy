@@ -7,26 +7,17 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
-public class ListFragment extends Fragment {
 
-    public ListFragment() {
-        // Required empty public constructor
-    }
-
+public class HomeFragement extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_list,container,false);
-        TextView text = (TextView)v.findViewById(R.id.fragmenttext);
-        text.setText("Test");
-        return v;
+        return inflater.inflate(R.layout.fragment_home_fragement, container, false);
     }
-
 
 
 }

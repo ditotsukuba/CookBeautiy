@@ -25,8 +25,17 @@ public class FrameActivity extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_activity);
-        Log.v("Test3:","passed.")    ;
-        getSupportFragmentManager().beginTransaction().add(R.id.tab_content,new ListFragment()).commit();
+              /*
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tx = manager.beginTransaction();
+        ListFragment list = new ListFragment();
+        //Bundle list_bundle = new Bundle();
+        tx.add(R.id.tab_content,list,"tab_content");
+        tx.commit();
+*/
+
+       // Log.v("Test3:","passed.")    ;
+        //getSupportFragmentManager().beginTransaction().add(R.id.tab_content,new ListFragment()).commit();
 
     }
 

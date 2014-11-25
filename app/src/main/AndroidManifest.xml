@@ -61,6 +61,7 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
+
     </application>
 
 </manifest>
