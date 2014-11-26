@@ -1,6 +1,7 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.InstrumentationInfo;
@@ -30,17 +31,19 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ListActivity extends Activity {
+public class ListActivity extends Fragment {
     private  DBHelper mDbHelper;
     private SQLiteDatabase db;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_activity);
+    public View onCreateView(LayoutInflater inflater,
+                                ViewGroup container,
+                                Bundle savedInstanceState) {
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.list_activity);
 // by Matsubara
 
-        mDbHelper = new DBHelper(this);
+        mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
         mDbHelper.createEmptyDataBase(); //DB更新
         db = mDbHelper.getReadableDatabase();
 
@@ -56,25 +59,25 @@ public class ListActivity extends Activity {
             size = columus.size();
             String name[] = new String[size];
             int id_number[] = new int[size];
-            int key=0;
+            int key = 0;
             final int[] listOrder = new int[size];
             Iterator iterator = columus.keySet().iterator();
             while (iterator.hasNext()) {
                 Object o = iterator.next();
                 //rowData = columus.get(o);
                 name_buf = (String) columus.get(o).get("name");
-                key = Integer.parseInt((String)columus.get(o).get("id"));
-                id_number[key-1] = key;
+                key = Integer.parseInt((String) columus.get(o).get("id"));
+                id_number[key - 1] = key;
 
-                name[key-1] = name_buf;
+                name[key - 1] = name_buf;
 
-                listOrder[key-1] = key;
+                listOrder[key - 1] = key;
 
             }
-            Log.v("key",name[1]);
+            Log.v("key", name[1]);
 
             // ListViewのインスタンスを取得
-            ListView list = (ListView) findViewById(R.id.listView);
+            ListView list = (ListView) getActivity().findViewById(R.id.listView);
             // リストアイテムのラベルを格納するArrayListをインスタンス化
             ArrayList<String> labelList = new ArrayList<String>();
 
@@ -85,7 +88,7 @@ public class ListActivity extends Activity {
 
             // Adapterのインスタンス化
             // 第三引数にlabelListを渡す
-            CustomAdapter mAdapter = new CustomAdapter(this, 0, labelList);
+            CustomAdapter mAdapter = new CustomAdapter(this.getActivity(), 0, labelList);
 
             // リストにAdapterをセット
             list.setAdapter(mAdapter);
@@ -98,19 +101,21 @@ public class ListActivity extends Activity {
                                         View view, int pos, long id) {
 
                     // 選択アイテムを取得
-                    ListView listView = (ListView)parent;
+                    ListView listView = (ListView) parent;
 
                     // 表示列の料理IDの取得
                     int no = listOrder[pos];
                     //Log.v("test", "test:"+String.valueOf(test));
 
                     // 画面起動
-                    Intent intent = new Intent(getApplicationContext(), RecipeActivity.class);
+                    Intent intent = new Intent(getActivity().getApplicationContext(), RecipeActivity.class);
                     intent.putExtra("id", no);
 
                     startActivity(intent);
                 }
             });
         }
+
+        return inflater.inflate(R.layout.list_activity, container, false);
     }
 }
