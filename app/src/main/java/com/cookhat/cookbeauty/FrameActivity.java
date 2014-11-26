@@ -6,6 +6,7 @@ import android.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -17,17 +18,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-
-
+import android.widget.ImageView;
 
 
 public class FrameActivity extends FragmentActivity {
 
-    private HomeFragment home = new HomeFragment();
-    private AnimationFragment list = new AnimationFragment();
-    private KareshiDataFragment karedata = new KareshiDataFragment();
-    private SettingFragment setting = new SettingFragment();
+
+
+
+
     private RecipeFragment recipe = new RecipeFragment();
+    private int state = 0; //0:home 1:list 2:kareshi 3:setting 4:recipe
 
 
     @Override
@@ -35,8 +36,8 @@ public class FrameActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_activity);
 
-       FragmentManager manager = getSupportFragmentManager();
-       FragmentTransaction tx = manager.beginTransaction();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tx = manager.beginTransaction();
        //(LISTFRAGMENTあるので禁止) ListFragment list = new ListFragment();
 
         //Bundle list_bundle =
@@ -45,6 +46,7 @@ public class FrameActivity extends FragmentActivity {
 
        //TestFragment test = new TestFragment();
        // getSupportFragmentManager().beginTransaction().add(R.id.tab_content,test);
+        HomeFragment home = new HomeFragment();
         tx.add(R.id.tab_content, home);
         tx.commit();
 
@@ -69,30 +71,76 @@ public class FrameActivity extends FragmentActivity {
         int pointY = (int) event.getY();
         int endX = (int) (0.92 * windowX);  //タブ端のX座標
         int endY = (int) (0.12 * windowY);
-
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tx = manager.beginTransaction();
         //Log.d("TouchEvent", "X:" + pointX + ",Y:" + pointY);
         //Log.d("window", "X:" + windowX + ",Y:" + windowY);
 
 
         if (pointY < endY) {
-            if (pointX < (int) endX * (1.0 / Num)) {
+            if (pointX < (int) endX * (1.0 / Num) && (state != 0)) {
+                Log.v("Test:","Touched");
+                Drawable img = getResources().getDrawable(R.drawable.tab1);
+                ImageView im =(ImageView)findViewById(R.id.tab_picture);
+                im.setImageDrawable(img);
+                Log.v("Test:","TabChanged");
+                HomeFragment home = new HomeFragment();
+                tx.replace(R.id.tab_content,home);
+                tx.addToBackStack(null);
+                tx.commit();
+                Log.v("Test:","Transaction");
+                state = 0;
                 //Intent intent = new Intent(getApplication(), MainActivity.class);
                 //startActivity(intent);
                 // MainActivity.this.finish();
                 //Log.d("main","");
-            } else if ((int) (endX * (1.0 / Num)) <= pointX & pointX < (int) (endX * (2.0 / Num))) {
-                Intent intent = new Intent(getApplication(), ListActivity.class);
-                startActivity(intent);
+            } else if ((int) (endX * (1.0 / Num)) <= pointX & pointX < (int) (endX * (2.0 / Num))&&(state != 1)) {
+                Log.v("Test:","Touched");
+                Drawable img = getResources().getDrawable(R.drawable.tab2);
+                ImageView im =(ImageView)findViewById(R.id.tab_picture);
+                im.setImageDrawable(img);
+                Log.v("Test:","TabChanged");
+                AnimationFragment list = new AnimationFragment();
+                Log.v("Test:","NewInstance");
+                tx.replace(R.id.tab_content,list);
+
+                Log.v("Test:","Replace");
+                tx.addToBackStack(null);
+                Log.v("Test:","BackStack");
+                tx.commit();
+                Log.v("Test:","Transaction");
+                state = 1;
+               // Intent intent = new Intent(getApplication(), ListActivity.class);
+                //startActivity(intent);
                 // MenuActivity.this.finish();
                 //Log.d("recipe","");
-            } else if ((int) (endX * (2.0 / Num)) <= pointX & pointX < (int) (endX * (3.0 / Num))) {
-                /*TextView tv = new TextView(this);
-                tv.setText("hanayome!!");
-                setContentView(tv);*/
-                Log.d("hayayome", "");
-            } else if ((int) (endX * (3.0 / Num)) <= pointX & pointX < endX) {
-                Intent intent = new Intent(getApplication(), KareshiActivity.class);
-                startActivity(intent);
+            } else if ((int) (endX * (2.0 / Num)) <= pointX & pointX < (int) (endX * (3.0 / Num))&&(state != 2)) {
+                Log.v("Test:","Touched");
+                Drawable img = getResources().getDrawable(R.drawable.tab3);
+                ImageView im =(ImageView)findViewById(R.id.tab_picture);
+                im.setImageDrawable(img);
+                KareshiDataFragment karedata = new KareshiDataFragment();
+                Log.v("Test:","TabChanged");
+                tx.replace(R.id.tab_content,karedata);
+                tx.addToBackStack(null);
+                tx.commit();
+                Log.v("Test:","Transaction");
+                state = 2;
+
+            } else if ((int) (endX * (3.0 / Num)) <= pointX & pointX < endX && (state != 3)) {
+                Log.v("Test:","Touched");
+                Drawable img = getResources().getDrawable(R.drawable.tab4);
+                ImageView im =(ImageView)findViewById(R.id.tab_picture);
+                im.setImageDrawable(img);
+                Log.v("Test:","TabChanged");
+                SettingFragment setting = new SettingFragment();
+                tx.replace(R.id.tab_content,setting);
+                tx.addToBackStack(null);
+                tx.commit();
+                Log.v("Test:","Transaction");
+                state = 3;
+                //Intent intent = new Intent(getApplication(), KareshiActivity.class);
+                //startActivity(intent);
                 /*TextView tv = new TextView(this);
                 tv.setText("settei!!");
                 setContentView(tv);*/

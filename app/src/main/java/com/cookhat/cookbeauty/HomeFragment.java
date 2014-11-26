@@ -22,6 +22,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        // View v = inflater.inflate(R.layout.fragment_home_fragement,container,false);
+        container.removeAllViews();
         return inflater.inflate(R.layout.fragment_home_fragement, container, false);
     }
 
