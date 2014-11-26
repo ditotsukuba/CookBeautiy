@@ -3,12 +3,14 @@ package com.cookhat.cookbeauty;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.*;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -19,20 +21,33 @@ import android.view.WindowManager;
 
 
 
-public class FrameActivity extends FragmentActivity{
+public class FrameActivity extends FragmentActivity {
+
+    private HomeFragment home = new HomeFragment();
+    private AnimationFragment list = new AnimationFragment();
+    private KareshiDataFragment karedata = new KareshiDataFragment();
+    private SettingFragment setting = new SettingFragment();
+    private RecipeFragment recipe = new RecipeFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_activity);
-              /*
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction tx = manager.beginTransaction();
-        ListFragment list = new ListFragment();
-        //Bundle list_bundle = new Bundle();
-        tx.add(R.id.tab_content,list,"tab_content");
+
+       FragmentManager manager = getSupportFragmentManager();
+       FragmentTransaction tx = manager.beginTransaction();
+       //(LISTFRAGMENTあるので禁止) ListFragment list = new ListFragment();
+
+        //Bundle list_bundle =
+       // HomeFragment home = new HomeFragment();
+        //AnimationFragment list = new AnimationFragment();
+
+       //TestFragment test = new TestFragment();
+       // getSupportFragmentManager().beginTransaction().add(R.id.tab_content,test);
+        tx.add(R.id.tab_content, home);
         tx.commit();
-*/
+
 
        // Log.v("Test3:","passed.")    ;
         //getSupportFragmentManager().beginTransaction().add(R.id.tab_content,new ListFragment()).commit();
