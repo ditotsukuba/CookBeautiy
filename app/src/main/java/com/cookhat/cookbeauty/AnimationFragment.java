@@ -36,7 +36,7 @@ public class AnimationFragment extends Fragment{
         mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
         mDbHelper.createEmptyDataBase(); //DB更新
         db = mDbHelper.getReadableDatabase();
-
+        View vi =inflater.inflate(R.layout.list_activity, container, false);
 
         if (db != null) {
             String name_buf;
@@ -67,7 +67,7 @@ public class AnimationFragment extends Fragment{
             Log.v("key", name[1]);
 
             // ListViewのインスタンスを取得
-            ListView list = (ListView) inflater.inflate(R.layout.list_activity, container, false).findViewById(R.id.listView);
+            ListView list = (ListView)vi.findViewById(R.id.listView);
            
             // リストアイテムのラベルを格納するArrayListをインスタンス化
             ArrayList<String> labelList = new ArrayList<String>();
@@ -110,7 +110,7 @@ public class AnimationFragment extends Fragment{
             });
         }
         Log.v("test", "before return");
-        return inflater.inflate(R.layout.list_activity, container, false);
+        return vi;
     }
 }
 
