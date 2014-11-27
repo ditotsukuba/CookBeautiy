@@ -17,11 +17,11 @@
     <FrameLayout
         android:id ="@+id/tab_content"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="70dp"
         android:layout_marginRight="25dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="25dp">
 
      </FrameLayout>
 

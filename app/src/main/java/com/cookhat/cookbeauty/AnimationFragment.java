@@ -1,112 +1,117 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.cookhat.cookbeauty.util.CustomAdapter;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AnimationFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AnimationFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
-public class AnimationFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AnimationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnimationFragment newInstance(String param1, String param2) {
-        AnimationFragment fragment = new AnimationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    public AnimationFragment() {
-        // Required empty public constructor
-    }
+public class AnimationFragment extends Fragment{
+    private  DBHelper mDbHelper;
+    private SQLiteDatabase db;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        container.removeAllViews();
-        return inflater.inflate(R.layout.fragment_animation, container, false);
-    }
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.list_activity);
+// by Matsubara
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
+        mDbHelper.createEmptyDataBase(); //DB更新
+        db = mDbHelper.getReadableDatabase();
+        View vi =inflater.inflate(R.layout.list_activity, container, false);
+
+        if (db != null) {
+            String name_buf;
+            String key_buf;
+            String id_buf;
+            int size = 0;
+
+
+            Map<Integer, Map> columus = mDbHelper.findAll("table_recipeLists", 0, 0);
+            size = columus.size();
+            String name[] = new String[size];
+            int id_number[] = new int[size];
+            int key = 0;
+            final int[] listOrder = new int[size];
+            Iterator iterator = columus.keySet().iterator();
+            while (iterator.hasNext()) {
+                Object o = iterator.next();
+                //rowData = columus.get(o);
+                name_buf = (String) columus.get(o).get("name");
+                key = Integer.parseInt((String) columus.get(o).get("id"));
+                id_number[key - 1] = key;
+
+                name[key - 1] = name_buf;
+
+                listOrder[key - 1] = key;
+
+            }
+            Log.v("key", name[1]);
+
+            // ListViewのインスタンスを取得
+            ListView list = (ListView)vi.findViewById(R.id.listView);
+           
+            // リストアイテムのラベルを格納するArrayListをインスタンス化
+            ArrayList<String> labelList = new ArrayList<String>();
+
+            // "List Item + ??"を20個リストに追加
+            for (int i = 0; i < size; i++) {
+                labelList.add(name[i]);
+            }
+
+            // Adapterのインスタンス化
+            // 第三引数にlabelListを渡す
+            CustomAdapter mAdapter = new CustomAdapter(this.getActivity().getApplicationContext(), 0, labelList);
+            Log.v("test", "カスタム");
+
+            // リストにAdapterをセット
+            list.setAdapter(mAdapter);
+
+            Log.v("test", "リストセット");
+            // リストアイテムの間の区切り線を非表示にする
+            list.setDivider(null);
+            Log.v("test", "divider");
+            // アイテムクリック時ののイベントを追加
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent,
+                                        View view, int pos, long id) {
+
+                    // 選択アイテムを取得
+                    ListView listView = (ListView) parent;
+
+                    // 表示列の料理IDの取得
+                    int no = listOrder[pos];
+                    //Log.v("test", "test:"+String.valueOf(test));
+
+                    // 画面起動
+                    Intent intent = new Intent(getActivity(), RecipeActivity.class);
+                    intent.putExtra("id", no);
+
+                    startActivity(intent);
+                }
+            });
         }
+        Log.v("test", "before return");
+        return vi;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }
+
+
