@@ -29,9 +29,8 @@ public class AnimationFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.list_activity);
-// by Matsubara
+
+        container.removeAllViews();
 
         mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
         mDbHelper.createEmptyDataBase(); //DB更新
