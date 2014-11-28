@@ -67,6 +67,13 @@ public class ListActivity extends Fragment {
                 //rowData = columus.get(o);
                 name_buf = (String) columus.get(o).get("name");
                 key = Integer.parseInt((String) columus.get(o).get("id"));
+                Log.v("料理名", name_buf);
+                Log.v("ジャンル", (String) columus.get(o).get("genre"));
+                Log.v("甘味", (String) columus.get(o).get("amami"));
+                Log.v("塩味", (String) columus.get(o).get("shio"));
+                Log.v("旨味", (String) columus.get(o).get("umami"));
+                Log.v("酸味", (String) columus.get(o).get("acid"));
+                Log.v("辛味", (String) columus.get(o).get("pain"));
                 id_number[key - 1] = key;
 
                 name[key - 1] = name_buf;
@@ -74,7 +81,7 @@ public class ListActivity extends Fragment {
                 listOrder[key - 1] = key;
 
             }
-            Log.v("key", name[1]);
+
 
             // ListViewのインスタンスを取得
             ListView list = (ListView) getActivity().findViewById(R.id.listView);

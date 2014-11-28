@@ -2,6 +2,7 @@ package com.cookhat.cookbeauty;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -35,6 +36,13 @@ public class AnimationFragment extends Fragment{
         mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
         mDbHelper.createEmptyDataBase(); //DB更新
         db = mDbHelper.getReadableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put("name","きむりいのおにぎり");
+        String whereClause = "id = ?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = "1";
+        db.update("table_recipeLists",v,whereClause,whereArgs);
         View vi =inflater.inflate(R.layout.list_activity, container, false);
 
         if (db != null) {
@@ -46,6 +54,7 @@ public class AnimationFragment extends Fragment{
 
             Map<Integer, Map> columus = mDbHelper.findAll("table_recipeLists", 0, 0);
             size = columus.size();
+
             String name[] = new String[size];
             int id_number[] = new int[size];
             int key = 0;
@@ -56,6 +65,14 @@ public class AnimationFragment extends Fragment{
                 //rowData = columus.get(o);
                 name_buf = (String) columus.get(o).get("name");
                 key = Integer.parseInt((String) columus.get(o).get("id"));
+                Log.v("料理名", name_buf);
+                Log.v("ジャンル", (String) columus.get(o).get("genre"));
+                Log.v("甘味", (String) columus.get(o).get("amami"));
+                Log.v("塩味", (String) columus.get(o).get("shio"));
+                Log.v("旨味", (String) columus.get(o).get("umami"));
+                Log.v("酸味", (String) columus.get(o).get("acid"));
+                Log.v("辛味", (String) columus.get(o).get("pain"));
+
                 id_number[key - 1] = key;
 
                 name[key - 1] = name_buf;
@@ -63,7 +80,8 @@ public class AnimationFragment extends Fragment{
                 listOrder[key - 1] = key;
 
             }
-            Log.v("key", name[1]);
+
+
 
             // ListViewのインスタンスを取得
             ListView list = (ListView)vi.findViewById(R.id.listView);

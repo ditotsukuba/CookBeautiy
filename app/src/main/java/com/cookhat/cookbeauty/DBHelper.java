@@ -37,6 +37,8 @@ public class DBHelper extends SQLiteOpenHelper {
         mDatabasePath = mContext.getDatabasePath(DB_NAME);
     }
 
+
+
     /**
      *  assetに格納したDBをコピーするため空のDBを作成
      */
@@ -44,9 +46,9 @@ public class DBHelper extends SQLiteOpenHelper {
         boolean dbExist = checkDataBaseExists();
 
         if(dbExist) {
-            //Log.v("test", "createDB あり");
+            Log.v("test", "createDB あり");
         }else{
-            //Log.v("test", "createDB DBなし");
+            Log.v("test", "createDB DBなし");
             getReadableDatabase();
             try {
                 // assets のDBをコピー
@@ -182,7 +184,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //try {
             mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
-            Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null, "default_para DESC, id DESC");
+            Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "id DESC",null);
 
             // 参照先を先頭に
             boolean isEof = cursor.moveToFirst();
@@ -191,7 +193,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 Map<String, String> rowData = new HashMap<String, String>();
 
                 rowData.put("id", cursor.getString(0));
+
                 rowData.put("name", cursor.getString(1));
+                Log.v("GetString","1");
                 rowData.put("rating",cursor.getString(2));
                 rowData.put("genre",cursor.getString(3));
                 rowData.put("amami",cursor.getString(4));
@@ -201,11 +205,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 rowData.put("pain",cursor.getString(8));
 
 
+
                 dataList.put(i, rowData);
                 i++;
 
                 isEof = cursor.moveToNext();
             }
+            Log.v("getString","OK.");
             cursor.close();
             return dataList;
 
