@@ -1,13 +1,91 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cookhat.cookbeauty.RecipeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textSize="40dp"
+        android:text="すごくお米がたべたい"
+        android:id="@+id/recipe_name"/>
+    <ImageView
+        android:id="@+id/ingredients"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="55dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ringnote"
+        >
+
+    </ImageView>
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+
+        android:layout_marginLeft="460dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="100dp"
+
+        android:src="@drawable/window_rate"
+        />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textSize="40dp"
+        android:text="彼の反応"
+        android:layout_marginLeft="430dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/skyblue"/>
+    <RatingBar
+        android:layout_width="520dp"
+        android:layout_height="100dp"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="430dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/ratingBar"
+        android:layout_gravity="right|center_horizontal"
+        android:focusable="true" />
+    <ImageView
+        android:layout_width="450dp"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+
+        android:layout_marginLeft="450dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="270dp"
+
+        android:src="@drawable/window_memo"
+        />
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+
+        android:layout_marginLeft="450dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="210dp"
+
+        android:src="@drawable/memo"
+        />
+
+
 
 </FrameLayout>

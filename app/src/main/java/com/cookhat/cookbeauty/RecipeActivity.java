@@ -38,7 +38,7 @@ public class RecipeActivity extends Activity {
             //Log.v("test", rowData.get("name"));
 
         }
-        Drawable img = getResources().getDrawable(R.drawable.id1page1);
+        Drawable img = getResources().getDrawable(R.drawable.tab1);//とりあえずエラー吐かないように修正
         ImageView im =(ImageView)findViewById(R.id.menuPicture);
         im.setImageDrawable(img);
 
