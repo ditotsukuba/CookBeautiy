@@ -192,6 +192,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 rowData.put("id", cursor.getString(0));
                 rowData.put("name", cursor.getString(1));
+                rowData.put("rating",cursor.getString(2));
+                rowData.put("genre",cursor.getString(3));
+                rowData.put("amami",cursor.getString(4));
+                rowData.put("shio",cursor.getString(5));
+                rowData.put("umami",cursor.getString(6));
+                rowData.put("acid",cursor.getString(7));
+                rowData.put("pain",cursor.getString(8));
+
 
                 dataList.put(i, rowData);
                 i++;
