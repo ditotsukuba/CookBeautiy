@@ -15,7 +15,7 @@ import com.cookhat.cookbeauty.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<String> {
+public class SuggestAdapter extends ArrayAdapter<String> {
 
     static class ViewHolder {
         TextView labelText;
@@ -24,7 +24,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
     private LayoutInflater inflater;
 
     // コンストラクタ
-    public CustomAdapter(Context context, int textViewResourceId, ArrayList<String> labelList) {
+    public SuggestAdapter(Context context, int textViewResourceId, ArrayList<String> labelList) {
         super(context,textViewResourceId, labelList);
     }
 
@@ -37,7 +37,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
         // Viewを再利用している場合は新たにViewを作らない
         if (view == null) {
             inflater =  (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.ribbon_layout, null);
+            view = inflater.inflate(R.layout.ribbon_suggest, null);
             TextView label = (TextView)view.findViewById(R.id.tv);
             holder = new ViewHolder();
             holder.labelText = label;
@@ -54,12 +54,9 @@ public class CustomAdapter extends ArrayAdapter<String> {
             holder.labelText.setText(str);
         }
 
-        // 行毎に背景色を変える
-        if(position%2==0){
-            holder.labelText.setBackgroundColor(Color.parseColor("#ff6347"));
-        }else{
-            holder.labelText.setBackgroundColor(Color.parseColor("#ffa07a"));
-        }
+
+            holder.labelText.setBackgroundColor(Color.parseColor("#ffa500"));
+
 
         // XMLで定義したアニメーションを読み込む
         Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.animejanai);

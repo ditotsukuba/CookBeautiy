@@ -22,8 +22,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list,container,false);
-        TextView text = (TextView)v.findViewById(R.id.fragmenttext);
-        text.setText("Test");
+
         return v;
     }
 

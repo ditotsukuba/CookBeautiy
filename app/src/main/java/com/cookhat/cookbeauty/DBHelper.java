@@ -169,7 +169,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             }
             Log.v("ID:"+(String)data.get(i).get("id"),Double.toString(reco));
-            WriteDBRecommend(Integer.parseInt((String)data.get(i).get("id")),reco);
+            WriteDBRecommend(Integer.parseInt((String) data.get(i).get("id")), reco);
 
         }
         mDatabase.close();
@@ -344,7 +344,50 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*
      * データの読み込み
-     */
+     *//*
+    public Map<Integer,Map> findSuggest(String table){
+        Map<Integer, Map> dataList = new HashMap<Integer, Map>();
+        String dbPath = mDatabasePath.getAbsolutePath();
+
+        String sql_where = null;
+         sql_where = "id=" + String.valueOf(0);
+
+        //try {
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
+        Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "recommend DESC",null);
+
+        // 参照先を先頭に
+        boolean isEof = cursor.moveToFirst();
+        final int ITEMS = 3;
+        int i = 0;
+        if()
+        for(i=0;i<ITEMS;i++) {
+            Map<String, String> rowData = new HashMap<String, String>();
+
+            rowData.put("id", cursor.getString(0));
+
+            rowData.put("name", cursor.getString(1));
+            rowData.put("rating",cursor.getString(2));
+            rowData.put("genre",cursor.getString(3));
+            rowData.put("amami",cursor.getString(4));
+            rowData.put("shio",cursor.getString(5));
+            rowData.put("umami",cursor.getString(6));
+            rowData.put("acid",cursor.getString(7));
+            rowData.put("pain",cursor.getString(8));
+            rowData.put("recommend",cursor.getString(9));
+            rowData.put("cooked",cursor.getString(10));
+
+
+
+            dataList.put(i, rowData);
+            i++;
+            cursor.moveToNext();
+         }
+
+        cursor.close();
+        return dataList;
+    }
+*/
     public Map<Integer, Map> findAll(String table, int id, int page) {
         Map<Integer, Map> dataList = new HashMap<Integer, Map>();
 
@@ -393,6 +436,53 @@ public class DBHelper extends SQLiteOpenHelper {
         //}
     }
 
+    public Map<Integer, Map> findSuggest(String table, int id) {
+        Map<Integer, Map> dataList = new HashMap<Integer, Map>();
+
+        //String[] columus = new String[]{"id", "name"};
+        String dbPath = mDatabasePath.getAbsolutePath();
+
+        String sql_where = null;
+        if(id>0) sql_where = "id=" + String.valueOf(id);
+
+        //try {
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
+        Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "recommend DESC",Integer.toString(5));
+
+        // 参照先を先頭に
+        boolean isEof = cursor.moveToFirst();
+        int i = 0;
+        while (isEof) {
+            Map<String, String> rowData = new HashMap<String, String>();
+
+            rowData.put("id", cursor.getString(0));
+
+            rowData.put("name", cursor.getString(1));
+            rowData.put("rating",cursor.getString(2));
+            rowData.put("genre",cursor.getString(3));
+            rowData.put("amami",cursor.getString(4));
+            rowData.put("shio",cursor.getString(5));
+            rowData.put("umami",cursor.getString(6));
+            rowData.put("acid",cursor.getString(7));
+            rowData.put("pain",cursor.getString(8));
+            rowData.put("recommend",cursor.getString(9));
+            rowData.put("cooked",cursor.getString(10));
+
+
+
+            dataList.put(i, rowData);
+            i++;
+
+            isEof = cursor.moveToNext();
+        }
+
+        cursor.close();
+        return dataList;
+
+        //}catch (Exception e) {
+        //return Log.e("test", e.toString());
+        //}
+    }
     public SQLiteDatabase openDataBase() throws SQLException {
         return getReadableDatabase();
     }
