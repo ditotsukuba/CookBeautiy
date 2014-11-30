@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cookhat.cookbeauty.util.CustomAdapter;
+import com.cookhat.cookbeauty.util.SuggestAdapter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,6 +57,44 @@ public class AnimationFragment extends Fragment{
 
         View vi =inflater.inflate(R.layout.list_activity, container, false);
 
+        //サジェストリストをどうにかする
+
+        Map<Integer,Map> suggest = mDbHelper.findSuggest("table_recipeLists",0);
+        int s = suggest.size();
+        String n_buf[]= new String[s];
+        double rec[] = new double[s];
+        int k[] = new int[s];
+        Iterator ite = suggest.keySet().iterator();
+        int counter = 0;
+        ArrayList<String> SuggestList = new ArrayList<String>();
+        while(ite.hasNext()){
+            Object o = ite.next();
+            k[counter] = Integer.parseInt((String) suggest.get(o).get("id"));
+            n_buf[counter] =  (String)suggest.get(o).get("name");
+            rec[counter] = Double.parseDouble((String) suggest.get(o).get("recommend"));
+            counter++;
+        }
+
+        final int k_pos[] = k;
+
+        for(int i=0;i<counter;i++){
+            SuggestList.add(n_buf[i]);
+        }
+        SuggestAdapter mAdap = new SuggestAdapter(this.getActivity().getApplicationContext(), 0, SuggestList);
+        ListView l = (ListView)vi.findViewById(R.id.Suggest_list);
+        l.setAdapter(mAdap);
+        l.setDivider(null);
+        l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent,
+                                    View view, int pos, long id) {
+                int no = k_pos[pos];
+                frame.changeRecipeFragment(no);
+            }
+        });
+
+
+
+
         if (db != null) {
             String name_buf;
             String key_buf;
@@ -65,6 +104,7 @@ public class AnimationFragment extends Fragment{
 
             Map<Integer, Map> columns = mDbHelper.findAll("table_recipeLists", 0, 0);
             size = columns.size();
+
 
             String name[] = new String[size];
             int id_number[] = new int[size];
