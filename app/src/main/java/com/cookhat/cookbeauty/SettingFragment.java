@@ -4,10 +4,38 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 
+public class SettingFragment extends Fragment implements View.OnClickListener {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        // 第３引数のbooleanは"container"にreturnするViewを追加するかどうか
+        //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
+        View v = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        // ボタンを取得して、ClickListenerをセット
+        Button btn = (Button)v.findViewById(R.id.button_reset);
+        btn.setOnClickListener(this);
+        return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        // TODO 自動生成されたメソッド・スタブ
+        switch(v.getId()){
+            case R.id.button_reset:
+                Log.d("My Test", "Clicked!");
+        }
+
+    }
+
+}
 
 
 /**
@@ -19,6 +47,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  *
  */
+/**
 public class SettingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +69,7 @@ public class SettingFragment extends Fragment {
      * @return A new instance of fragment SettingFragment.
      */
     // TODO: Rename and change types and number of parameters
+  /**
     public static SettingFragment newInstance(String param1, String param2) {
         SettingFragment fragment = new SettingFragment();
         Bundle args = new Bundle();
@@ -103,9 +133,11 @@ public class SettingFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+  /**
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 
 }
+*/
