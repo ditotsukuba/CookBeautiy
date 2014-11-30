@@ -1,14 +1,21 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class RecipeFragment extends Fragment {
@@ -16,7 +23,9 @@ public class RecipeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
+    private  DBHelper mDbHelper;
+    private SQLiteDatabase db;
+    private int load_id = 0;
     public RecipeFragment() {
         // Required empty public constructor
     }
@@ -31,7 +40,48 @@ public class RecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Integer id = getArguments().getInt("id");
+        load_id = id;
         View v = inflater.inflate(R.layout.fragment_recipe, container, false);
+        mDbHelper = new DBHelper(getActivity());
+        db = mDbHelper.getReadableDatabase();
+
+        Map<Integer, Map> columns = mDbHelper.findAll("table_recipeLists", id, 0);
+        Map<String, String> rowData;
+        //if(columns.size()==1){
+            rowData = columns.get(0);
+            TextView titleView = (TextView) v.findViewById(R.id.recipe_name);
+            titleView.setText(rowData.get("name"));
+            //Log.v("test", rowData.get("name"));
+        //}
+
+
+        RatingBar ratingbar = (RatingBar)v.findViewById(R.id.ratingBar);
+        ratingbar.setRating(Float.parseFloat(rowData.get("rating")));
+        ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener()
+        {
+           @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser)
+            {
+                //テストコード
+               // Toast.makeText(getActivity(), "New Rating: " + rating, Toast.LENGTH_SHORT).show();
+               mDbHelper.WriteDBRate(load_id,rating);
+               mDbHelper.calcRecommend();
+
+               //テストコード
+                db = mDbHelper.getReadableDatabase();
+                Map<Integer, Map> columns = mDbHelper.findAll("table_recipeLists", 0, 0);
+                Iterator iterator = columns.keySet().iterator();
+                while (iterator.hasNext()) {
+                    Object o = iterator.next();
+                    //rowData = columus.get(o);
+                    String name_buf = (String)columns.get(o).get("name");
+                    int key = Integer.parseInt((String) columns.get(o).get("id"));
+                    Log.v("料理名", name_buf);
+                    Log.v("オススメ度", (String) columns.get(o).get("recommend"));
+                }
+            }
+        });
 
         return v;
     }
@@ -42,7 +92,7 @@ public class RecipeFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
+/*
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -53,6 +103,7 @@ public class RecipeFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+    */
 
     @Override
     public void onDetach() {

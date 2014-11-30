@@ -57,6 +57,8 @@ public class FrameActivity extends FragmentActivity {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tx = manager.beginTransaction();
         // ウィンドウマネージャのインスタンス取得
         WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         // ディスプレイのインスタンス生成
@@ -71,8 +73,7 @@ public class FrameActivity extends FragmentActivity {
         int pointY = (int) event.getY();
         int endX = (int) (0.92 * windowX);  //タブ端のX座標
         int endY = (int) (0.12 * windowY);
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction tx = manager.beginTransaction();
+
         //Log.d("TouchEvent", "X:" + pointX + ",Y:" + pointY);
         //Log.d("window", "X:" + windowX + ",Y:" + windowY);
 
@@ -103,8 +104,9 @@ public class FrameActivity extends FragmentActivity {
                 AnimationFragment list = new AnimationFragment();
                 Log.v("Test:","NewInstance");
                 tx.replace(R.id.tab_content,list);
+                tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
-                Log.v("Test:","Replace");
+                Log.v("Test:", "Replace");
                 tx.addToBackStack(null);
                 Log.v("Test:","BackStack");
                 tx.commit();
@@ -115,29 +117,29 @@ public class FrameActivity extends FragmentActivity {
                 // MenuActivity.this.finish();
                 //Log.d("recipe","");
             } else if ((int) (endX * (2.0 / Num)) <= pointX & pointX < (int) (endX * (3.0 / Num))&&(state != 2)) {
-                Log.v("Test:","Touched");
+
                 Drawable img = getResources().getDrawable(R.drawable.tab3);
                 ImageView im =(ImageView)findViewById(R.id.tab_picture);
                 im.setImageDrawable(img);
                 KareshiDataFragment karedata = new KareshiDataFragment();
-                Log.v("Test:","TabChanged");
+
                 tx.replace(R.id.tab_content,karedata);
                 tx.addToBackStack(null);
                 tx.commit();
-                Log.v("Test:","Transaction");
+
                 state = 2;
 
             } else if ((int) (endX * (3.0 / Num)) <= pointX & pointX < endX && (state != 3)) {
-                Log.v("Test:","Touched");
+
                 Drawable img = getResources().getDrawable(R.drawable.tab4);
                 ImageView im =(ImageView)findViewById(R.id.tab_picture);
                 im.setImageDrawable(img);
-                Log.v("Test:","TabChanged");
+
                 SettingFragment setting = new SettingFragment();
                 tx.replace(R.id.tab_content,setting);
                 tx.addToBackStack(null);
                 tx.commit();
-                Log.v("Test:","Transaction");
+
                 state = 3;
                 //Intent intent = new Intent(getApplication(), KareshiActivity.class);
                 //startActivity(intent);
@@ -156,6 +158,27 @@ public class FrameActivity extends FragmentActivity {
         //MenuActivity.this.finish();
         return super.onTouchEvent(event);
     }
+
+    public void changeRecipeFragment(int no)
+    {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tx = manager.beginTransaction();
+        if(state != 4) {
+
+            RecipeFragment recipe = new RecipeFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", no);
+
+            recipe.setArguments(bundle);
+
+            tx.replace(R.id.tab_content, recipe);
+
+            tx.addToBackStack(null);
+            tx.commit();
+            state = 4;
+        }
+    }
+
 }
 
 /*

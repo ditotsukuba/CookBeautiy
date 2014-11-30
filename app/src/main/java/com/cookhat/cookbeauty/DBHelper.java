@@ -1,5 +1,6 @@
 package com.cookhat.cookbeauty;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -35,6 +37,176 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DATABASE_VERSION);
         mContext = context;
         mDatabasePath = mContext.getDatabasePath(DB_NAME);
+    }
+
+    public void WriteFlag(int id,int flag)
+    {
+        ContentValues f = new ContentValues();
+        String whereClause = "id = ?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(id);
+        f.put("cooked",flag);
+        mDatabase.update("table_recipeLists", f, whereClause, whereArgs);
+    }
+
+    public void calcRecommend()
+    {
+        int size = 0;
+        int i = 0;
+        int j = 0;
+        final int CHECK_PARAMS = 7;
+        double reco = 0;
+        //SQLiteDatabase d =  getReadableDatabase();
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        Map<Integer,Map>data = findAll("table_recipeLists",0,0);
+        size = data.size();
+
+
+        //Iterator ite = data.keySet().iterator();
+
+        /*一時格納用変数*/
+        double rate_buf[],rate[];
+        rate_buf = new double [7];//計算用
+        rate = new double [7];//[0]:レーティング,[1]:ジャンル,[2]甘み,[3]塩味,[4]旨み,[5]酸味[6]辛み
+        /*ここまで*/
+        for(i=size-1;i>=0;i--){
+            reco = 0;
+
+            rate[0] = Double.parseDouble((String)data.get(i).get("rating"));
+            rate[1] = Double.parseDouble((String)data.get(i).get("genre"));
+            rate[2] = Double.parseDouble((String)data.get(i).get("amami"));
+            rate[3] = Double.parseDouble((String)data.get(i).get("shio"));
+            rate[4] = Double.parseDouble((String)data.get(i).get("umami"));
+            rate[5] = Double.parseDouble((String)data.get(i).get("acid"));
+            rate[6] = Double.parseDouble((String)data.get(i).get("pain"));
+            Iterator ite_now = data.keySet().iterator();
+            int count = 0;
+            while(ite_now.hasNext())
+            {
+
+                double reco_buf = 0;
+                if(true){
+                    Object obj_buf = ite_now.next();
+                    rate_buf[0] = Double.parseDouble((String)data.get(obj_buf).get("rating"));
+                    rate_buf[1] = Double.parseDouble((String)data.get(obj_buf).get("genre"));
+                    rate_buf[2] = Double.parseDouble((String)data.get(obj_buf).get("amami"));
+                    rate_buf[3] = Double.parseDouble((String)data.get(obj_buf).get("shio"));
+                    rate_buf[4] = Double.parseDouble((String)data.get(obj_buf).get("umami"));
+                    rate_buf[5] = Double.parseDouble((String)data.get(obj_buf).get("acid"));
+                    rate_buf[6] = Double.parseDouble((String)data.get(obj_buf).get("pain"));
+                    //5Stars
+                    if(rate_buf[0] == 5.0){
+                        for(j=2;j<CHECK_PARAMS;j++){
+                            if(rate[j] == rate_buf[j]){
+                                reco_buf += 5.0;
+                            }
+                            else if(Math.abs(rate[j] - rate_buf[j]) == 1.0){
+                                reco_buf += 1.0;
+                            }
+                        }
+                        count++;
+                        Log.v("IteratorID="+(String)data.get(i).get("id"),Integer.toString(count));
+                        reco_buf *=2.0;
+
+                    }
+                    //4Stars
+                    else if(rate_buf[0] == 4.0){
+                        for(j=2;j<CHECK_PARAMS;j++){
+                            if(rate[j] == rate_buf[j]){
+                                reco_buf += 5.0;
+                            }
+                            else if(Math.abs(rate[j] - rate_buf[j]) == 1.0){
+                                reco_buf += 1.0;
+                            }
+                        }
+                        reco_buf *= 2.0;
+
+
+                    }
+                    //3Stars
+                    else if(rate_buf[0] == 3.0){
+                        for(j=2;j<CHECK_PARAMS;j++){
+                            if(rate[j] == rate_buf[j]){
+                                reco_buf += 5.0;
+                            }
+                            else if(Math.abs(rate[j] - rate_buf[j]) == 1.0){
+                                reco_buf += 1.0;
+                            }
+                        }
+                        reco_buf *= 0.5;
+
+                    }
+                    //2Stars
+                    else if(rate_buf[0] == 2.0){
+                        for(j=2;j<CHECK_PARAMS;j++){
+                            if(rate[j] == rate_buf[j]){
+                                reco_buf += 5.0;
+                            }
+                            else if(Math.abs(rate[j] - rate_buf[j]) == 1.0){
+                                reco_buf += 1.0;
+                            }
+                        }
+                        reco_buf *= -1.0;
+
+                    }
+                    //1Star
+                    else if(rate_buf[0] == 1.0){
+                        for(j=2;j<CHECK_PARAMS;j++){
+                            if(rate[j] == rate_buf[j]){
+                                reco_buf += 5.0;
+                            }
+                            else if(Math.abs(rate[j] - rate_buf[j]) == 1.0){
+                                reco_buf += 1.0;
+                            }
+                        }
+                        reco_buf *= -1.5;
+
+                    }
+                }
+                reco += reco_buf;
+
+
+            }
+            Log.v("ID:"+(String)data.get(i).get("id"),Double.toString(reco));
+            WriteDBRecommend(Integer.parseInt((String)data.get(i).get("id")),reco);
+
+        }
+        mDatabase.close();
+
+    }
+    public void WriteDBRate(int id,double rate)
+    {
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues v = new ContentValues();
+
+
+        String whereClause = "id = ?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(id);
+
+            v.put("rating", rate);
+
+
+        mDatabase.update("table_recipeLists", v, whereClause, whereArgs);
+        mDatabase.close();
+    }
+    public void WriteDBRecommend(int id,double recommend)
+    {
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues v = new ContentValues();
+
+
+        String whereClause = "id = ?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(id);
+        v.put("recommend", recommend);
+
+
+        mDatabase.update("table_recipeLists", v, whereClause, whereArgs);
+        mDatabase.close();
     }
 
 
@@ -195,7 +367,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 rowData.put("id", cursor.getString(0));
 
                 rowData.put("name", cursor.getString(1));
-                Log.v("GetString","1");
                 rowData.put("rating",cursor.getString(2));
                 rowData.put("genre",cursor.getString(3));
                 rowData.put("amami",cursor.getString(4));
@@ -203,6 +374,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 rowData.put("umami",cursor.getString(6));
                 rowData.put("acid",cursor.getString(7));
                 rowData.put("pain",cursor.getString(8));
+                rowData.put("recommend",cursor.getString(9));
+                rowData.put("cooked",cursor.getString(10));
 
 
 
@@ -211,7 +384,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 isEof = cursor.moveToNext();
             }
-            Log.v("getString","OK.");
+
             cursor.close();
             return dataList;
 

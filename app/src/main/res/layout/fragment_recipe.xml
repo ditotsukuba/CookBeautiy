@@ -8,31 +8,32 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:textSize="40dp"
+        android:layout_height="60dp"
+        android:textSize="50dp"
         android:text="すごくお米がたべたい"
+        android:textColor="@color/black"
         android:id="@+id/recipe_name"/>
     <ImageView
         android:id="@+id/ingredients"
-        android:layout_width="350dp"
+        android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="50dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="70dp"
         android:scaleType="fitXY"
         android:src="@drawable/ringnote"
         >
 
     </ImageView>
     <ImageView
-        android:layout_width="400dp"
-        android:layout_height="100dp"
+        android:layout_width="303dp"
+        android:layout_height="90dp"
         android:scaleType="fitXY"
 
         android:layout_marginLeft="460dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="86dp"
         android:layout_marginTop="100dp"
 
         android:src="@drawable/window_rate"
@@ -40,27 +41,28 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:text="彼の反応"
-        android:layout_marginLeft="430dp"
+        android:layout_marginLeft="450dp"
         android:layout_marginBottom="50dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:textColor="@color/skyblue"/>
     <RatingBar
-        android:layout_width="520dp"
-        android:layout_height="100dp"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="430dp"
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="115dp"
+        android:layout_marginLeft="470dp"
         android:layout_marginBottom="50dp"
         android:layout_marginRight="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/ratingBar"
-        android:layout_gravity="right|center_horizontal"
-        android:focusable="true" />
+        android:numStars="5"
+        android:stepSize="1.0" />
+    <!--
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        -->
     <ImageView
         android:layout_width="450dp"
         android:layout_height="180dp"
