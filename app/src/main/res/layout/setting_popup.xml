@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/popup_text"
+    <Button
+        android:id="@+id/popup_yes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Popup"
+        android:text="おｋ"
         android:textSize="50sp" />
-</LinearLayout>
+    <Button
+        android:layout_marginTop="80dp"
+        android:id="@+id/popup_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="いやよ"
+        android:textSize="50sp" />
+</FrameLayout>

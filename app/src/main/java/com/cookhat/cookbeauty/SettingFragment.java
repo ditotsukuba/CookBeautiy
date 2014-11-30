@@ -8,30 +8,48 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.database.sqlite.SQLiteDatabase;
 
-public class SettingFragment extends Fragment implements View.OnClickListener {
+public class SettingFragment extends Fragment {
+    private  DBHelper mDbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         // 第３引数のbooleanは"container"にreturnするViewを追加するかどうか
         //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
-
         // ボタンを取得して、ClickListenerをセット
-        Button btn = (Button)v.findViewById(R.id.button_reset);
-        btn.setOnClickListener(this);
         return v;
     }
 
     @Override
-    public void onClick(View v) {
+    public void onStart() {
+        super.onStart();
+        final Button button = (Button)getActivity().findViewById(R.id.button_reset);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+               View popup = getActivity().getLayoutInflater().inflate(R.layout.setting_popup,null);
+                PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setContentView(popup);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.showAsDropDown(v);
+            }
         // TODO 自動生成されたメソッド・スタブ
-        switch(v.getId()){
-            case R.id.button_reset:
-                Log.d("My Test", "Clicked!");
-        }
+       // switch(v.getId()){
+         //   case R.id.button_reset:
+           //     Log.d("My Test", "Clicked!");
+           // case R.id.button_ver:
+             //   Log.d("My Test", "Clicked!!");
+
+        });
 
     }
 
