@@ -30,136 +30,163 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="えび"
+        android:checked="false"
         android:id="@+id/allergy_ebi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="かに"
+            android:checked="false"
             android:id="@+id/allergy_kani" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="小麦"
+            android:checked="false"
             android:id="@+id/allergy_komugi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="そば"
+            android:checked="false"
             android:id="@+id/allergy_soba" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="卵"
+            android:checked="false"
             android:id="@+id/allergy_tamago" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="乳"
+            android:checked="false"
             android:id="@+id/allergy_titi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="落花生"
+            android:checked="false"
             android:id="@+id/allergy_rakkasei" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="あわび"
+            android:checked="false"
             android:id="@+id/allergy_awabi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="いか"
+            android:checked="false"
             android:id="@+id/allergy_ika" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="いくら"
+            android:checked="false"
             android:id="@+id/allergy_ikura" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="サケ"
+            android:checked="false"
             android:id="@+id/allergy_sake" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="サバ"
+            android:checked="false"
             android:id="@+id/allergy_saba" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="カシューナッツ"
+            android:checked="false"
             android:id="@+id/allergy_kasyunattu" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="くるみ"
+            android:checked="false"
             android:id="@+id/allergy_kurumi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="大豆"
+            android:checked="false"
             android:id="@+id/allergy_daizu" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ゴマ"
+            android:checked="false"
             android:id="@+id/allergy_goma" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="松茸"
+            android:checked="false"
             android:id="@+id/allergy_matutake" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="山芋"
+            android:checked="false"
             android:id="@+id/allergy_yamaimo" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="オレンジ"
+            android:checked="false"
             android:id="@+id/allergy_orenzi" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="キウイフルーツ"
+            android:checked="false"
             android:id="@+id/allergy_kiui" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="バナナ"
+            android:checked="false"
             android:id="@+id/allergy_banana" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="りんご"
+            android:checked="false"
             android:id="@+id/allergy_ringo" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="桃"
+            android:checked="false"
             android:id="@+id/allergy_momo" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ゼラチン"
+            android:checked="false"
             android:id="@+id/allergy_zeratin" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="牛肉"
+            android:checked="false"
             android:id="@+id/allergy_gyuuniku" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="豚肉"
+            android:checked="false"
             android:id="@+id/allergy_butaniku" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="鶏肉"
+            android:checked="false"
             android:id="@+id/allergy_toriniku" />
 
         </LinearLayout>
@@ -174,6 +201,7 @@
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:text="決定"
+
         />
     <Button
         android:id="@+id/allergy_cancel_button"

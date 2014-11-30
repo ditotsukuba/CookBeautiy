@@ -3,6 +3,7 @@ package com.cookhat.cookbeauty;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,12 +24,24 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.Inflater;
+import android.view.View.OnClickListener;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+
+import android.util.Xml;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,51 +107,63 @@ public class KareshiDataFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         container.removeAllViews();
+        View v =inflater.inflate(R.layout.activity_kareshi_edit, container, false);
 
-
-        return inflater.inflate(R.layout.activity_kareshi_edit, container, false);
+        return v;
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        final Button button = (Button)getActivity().findViewById(R.id.allergyButton);
-        final Button accept_button = (Button)getActivity().findViewById(R.id.allergy_accept_button);
-        final Button cancel_button = (Button)getActivity().findViewById(R.id.allergy_cancel_button);
+
+        final Button allergy_button = (Button) getActivity().findViewById(R.id.allergyButton);
 
         //　allelgy.txtに彼のアレルギー情報を保持
         //　空ファイルなら"なし"　データがあれば取得してボタンのテキストを変更する
-        String his_allergy = null;
-        try{
+        final ArrayList<String> his_allergy = new ArrayList<String>();
+        final ArrayList<String> not_his_allergy = new ArrayList<String>();
+        try {
             AssetManager asset = getResources().getAssets();
             InputStream in = asset.open("allergy.txt");
 
-            BufferedReader reader =new BufferedReader(new InputStreamReader(in,"UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String s;
 
 
             while ((s = reader.readLine()) != null) {
-                his_allergy = his_allergy + s.toString() + ",";
+                String[] temp = s.toString().split(",");
+                if (Integer.parseInt(temp[1]) == 1)    // 1 がアレルギー（0は何もない）
+                    his_allergy.add(temp[0]);
+                else
+                    not_his_allergy.add(temp[0]);
             }
 
-            if(his_allergy == null)
-                button.setText("なし");
-            else
-                button.setText(his_allergy);
+            if (his_allergy.isEmpty())
+                allergy_button.setText("なし");
+            else {
+                String temp_string = "";
+                for(int i=0; i < his_allergy.size(); i++)
+                    temp_string = temp_string + his_allergy.get(i) + " ";
+                allergy_button.setText(temp_string);
+            }
 
-        }catch(IOException e){
+            in.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         // allergyList.txtにアレルギー主品目を保持
-        // ボタンが押されたとき　ポップアップで主品目一覧　を表示する
-        button.setOnClickListener(new View.OnClickListener() {
+        // ボタンが押されたとき ポップアップで主品目一覧 を表示する
+        allergy_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                /*
+
                 // allergyList.txt から his_allergyにデータ格納
-                ArrayList<String> his_allergy_list = new ArrayList<String>();
+                //Map<String,Integer> map = new HashMap<String,Integer>();
+                /*
+                ArrayList<String> allergy_list = new ArrayList<String>();
+
                 try{
                     AssetManager asset = getResources().getAssets();
                     InputStream in = asset.open("allergyList.txt");
@@ -147,19 +172,153 @@ public class KareshiDataFragment extends Fragment {
                     String s;
 
                     while ((s = reader.readLine()) != null) {
-                        his_allergy_list.add(s.toString());
+                        allergy_list.add(s.toString());
                     }
 
                 }catch(IOException e){
                     e.printStackTrace();
                 }
-                */
-                PopupWindow popupWindow = new PopupWindow(getActivity());
+*/
+
+                //ポップアップの処理
+                View popup = getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null);
+                final PopupWindow popupWindow = new PopupWindow(getActivity());
                 popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                popupWindow.setContentView(getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null));
-                //popupWindow.setOutsideTouchable(true);
+                popupWindow.setContentView(popup);
+                popupWindow.setOutsideTouchable(true);
                 popupWindow.setFocusable(true);
                 popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+                final Button accept_button = (Button) popup.findViewById(R.id.allergy_accept_button);
+                final Button cancel_button = (Button) popup.findViewById(R.id.allergy_cancel_button);
+                final CheckBox ebi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_ebi);
+                final CheckBox kani_checkbox = (CheckBox) popup.findViewById(R.id.allergy_kani);
+                final CheckBox komugi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_komugi);
+                final CheckBox soba_checkbox = (CheckBox) popup.findViewById(R.id.allergy_soba);
+                final CheckBox tamago_checkbox = (CheckBox) popup.findViewById(R.id.allergy_tamago);
+                final CheckBox titi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_titi);
+                final CheckBox rakkasei_checkbox = (CheckBox) popup.findViewById(R.id.allergy_rakkasei);
+                final CheckBox awabi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_awabi);
+                final CheckBox ika_checkbox = (CheckBox) popup.findViewById(R.id.allergy_ika);
+                final CheckBox ikura_checkbox = (CheckBox) popup.findViewById(R.id.allergy_ikura);
+                final CheckBox sake_checkbox = (CheckBox) popup.findViewById(R.id.allergy_sake);
+                final CheckBox saba_checkbox = (CheckBox) popup.findViewById(R.id.allergy_saba);
+                final CheckBox kasyunattu_checkbox = (CheckBox) popup.findViewById(R.id.allergy_kasyunattu);
+                final CheckBox kurumi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_kurumi);
+                final CheckBox daizu_checkbox = (CheckBox) popup.findViewById(R.id.allergy_daizu);
+                final CheckBox goma_checkbox = (CheckBox) popup.findViewById(R.id.allergy_goma);
+                final CheckBox matutake_checkbox = (CheckBox) popup.findViewById(R.id.allergy_matutake);
+                final CheckBox yamaimo_checkbox = (CheckBox) popup.findViewById(R.id.allergy_yamaimo);
+                final CheckBox orenzi_checkbox = (CheckBox) popup.findViewById(R.id.allergy_orenzi);
+                final CheckBox kiui_checkbox = (CheckBox) popup.findViewById(R.id.allergy_kiui);
+                final CheckBox banana_checkbox = (CheckBox) popup.findViewById(R.id.allergy_banana);
+                final CheckBox ringo_checkbox = (CheckBox) popup.findViewById(R.id.allergy_ringo);
+                final CheckBox momo_checkbox = (CheckBox) popup.findViewById(R.id.allergy_momo);
+                final CheckBox zeratin_checkbox = (CheckBox) popup.findViewById(R.id.allergy_zeratin);
+                final CheckBox gyuuniku_checkbox = (CheckBox) popup.findViewById(R.id.allergy_gyuuniku);
+                final CheckBox butaniku_checkbox = (CheckBox) popup.findViewById(R.id.allergy_butaniku);
+                final CheckBox toriniku_checkbox = (CheckBox) popup.findViewById(R.id.allergy_toriniku);
+
+                for(int i=0; i < his_allergy.size(); i++){
+                    String allergy = his_allergy.get(i);
+                    if(allergy == "えび")
+                        ebi_checkbox.setChecked(true);
+                        //getActivity().setContentView(ebi_checkbox);
+                    if(allergy == "かに")
+                        kani_checkbox.setChecked(true);
+                    if(allergy == "小麦")
+                        komugi_checkbox.setChecked(true);
+                    if(allergy == "そば")
+                        soba_checkbox.setChecked(true);
+                        //getActivity().setContentView(soba_checkbox);
+                    if(allergy == "卵")
+                        tamago_checkbox.setChecked(true);
+                    if(allergy == "乳")
+                        titi_checkbox.setChecked(true);
+                    if(allergy == "落花生")
+                        rakkasei_checkbox.setChecked(true);
+                    if(allergy == "あわび")
+                        awabi_checkbox.setChecked(true);
+                    if(allergy == "いか")
+                        ika_checkbox.setChecked(true);
+                    if(allergy == "いくら")
+                        ikura_checkbox.setChecked(true);
+                    if(allergy == "サケ")
+                        sake_checkbox.setChecked(true);
+                    if(allergy == "サバ")
+                        saba_checkbox.setChecked(true);
+                    if(allergy == "カシューナッツ")
+                        kasyunattu_checkbox.setChecked(true);
+                    if(allergy == "くるみ")
+                        kurumi_checkbox.setChecked(true);
+                    if(allergy == "大豆")
+                        daizu_checkbox.setChecked(true);
+                    if(allergy == "ゴマ")
+                        goma_checkbox.setChecked(true);
+                    if(allergy == "松茸")
+                        matutake_checkbox.setChecked(true);
+                    if(allergy == "山芋")
+                        yamaimo_checkbox.setChecked(true);
+                    if(allergy == "オレンジ")
+                        orenzi_checkbox.setChecked(true);
+                    if(allergy == "キウイフルーツ")
+                        kiui_checkbox.setChecked(true);
+                    if(allergy == "バナナ")
+                        banana_checkbox.setChecked(true);
+                    if(allergy == "りんご")
+                        ringo_checkbox.setChecked(true);
+                    if(allergy == "桃")
+                        momo_checkbox.setChecked(true);
+                    if(allergy == "ゼラチン")
+                        zeratin_checkbox.setChecked(true);
+                    if(allergy == "牛肉")
+                        gyuuniku_checkbox.setChecked(true);
+                    if(allergy == "豚肉")
+                        butaniku_checkbox.setChecked(true);
+                    if(allergy == "鶏肉")
+                        toriniku_checkbox.setChecked(true);
+
+                }
+
+/*
+                InputStream is = null;
+                try {
+                    is = getActivity().openFileInput("res/layout/popup_allergy_list.xml");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                //InputStream is = (InputStream) getResources().getLayout(R.layout.popup_allergy_list);
+
+                XmlPullParser xpp = Xml.newPullParser();
+                try {
+                    xpp.setInput(is, "UTF-8");
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                }
+
+                int eventType = 0;
+                try {
+                    eventType = xpp.getEventType();
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                }
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if(eventType == XmlPullParser.START_TAG) {
+                        if (xpp.getName().equals("checkbox"))
+                            Log.v("start tag", xpp.getName());
+                    } else if(eventType == XmlPullParser.TEXT) {
+                        Log.v("text", xpp.getName());
+                    }
+
+                    try {
+                        eventType = xpp.next();//increment
+                        Log.v("test", xpp.getName());
+                    } catch (XmlPullParserException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+*/
 
 /*
                 InputStream is = getResources()
@@ -236,9 +395,43 @@ public class KareshiDataFragment extends Fragment {
 */
 
 
-                //mPopupWindow = new PopupWindow();
-                //mPopupWindow.isShowing();
+                accept_button.setOnClickListener(new OnClickListener() {
 
+                    @Override
+                    public void onClick(View v) {
+
+                        // Write
+                        {
+                            try {
+                                String file_data="";
+                                for(int i=0; i<his_allergy.size();i++)
+                                    file_data = file_data + ",1\n";
+                                for(int i=0; i<not_his_allergy.size();i++)
+                                    file_data = file_data + ",0\n";
+                                getActivity().deleteFile("allergy.txt");
+                                FileOutputStream fileOutputStream = getActivity().openFileOutput("allergy.txt", Context.MODE_PRIVATE);
+                                fileOutputStream.write( file_data.getBytes() );
+
+                                fileOutputStream.close();
+                            } catch (FileNotFoundException e) {
+                            } catch (IOException e) {
+                            }
+                            Toast.makeText(getActivity(), "変更されました？", Toast.LENGTH_SHORT).show();
+                            popupWindow.dismiss();
+                        }
+
+                    }
+                });
+
+                cancel_button.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        //Log.v("test", "cancel");
+                        //Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+                        popupWindow.dismiss();
+                    }
+                });
 
             }
         });
@@ -247,8 +440,6 @@ public class KareshiDataFragment extends Fragment {
 
 
     }
-
-
 /*
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -289,4 +480,6 @@ public class KareshiDataFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 */
+
+
 }
