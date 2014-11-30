@@ -3,5 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="picture_size">250dp</dimen>
-    <dimen name="midium_text_size_kareshi">20dp</dimen>
+    <dimen name="midium_text_size_kareshi">25dp</dimen>
 </resources>

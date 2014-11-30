@@ -1,25 +1,32 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 
@@ -89,9 +96,6 @@ public class KareshiDataFragment extends Fragment {
         container.removeAllViews();
 
 
-
-
-
         return inflater.inflate(R.layout.activity_kareshi_edit, container, false);
     }
 
@@ -99,16 +103,19 @@ public class KareshiDataFragment extends Fragment {
     public void onStart(){
         super.onStart();
         final Button button = (Button)getActivity().findViewById(R.id.allergyButton);
+        final Button accept_button = (Button)getActivity().findViewById(R.id.allergy_accept_button);
+        final Button cancel_button = (Button)getActivity().findViewById(R.id.allergy_cancel_button);
 
         //　allelgy.txtに彼のアレルギー情報を保持
         //　空ファイルなら"なし"　データがあれば取得してボタンのテキストを変更する
+        String his_allergy = null;
         try{
             AssetManager asset = getResources().getAssets();
             InputStream in = asset.open("allergy.txt");
 
             BufferedReader reader =new BufferedReader(new InputStreamReader(in,"UTF-8"));
             String s;
-            String his_allergy = null;
+
 
             while ((s = reader.readLine()) != null) {
                 his_allergy = his_allergy + s.toString() + ",";
@@ -124,44 +131,120 @@ public class KareshiDataFragment extends Fragment {
         }
 
         // allergyList.txtにアレルギー主品目を保持
-        // ボタンが押されたとき　○○○　を行う
+        // ボタンが押されたとき　ポップアップで主品目一覧　を表示する
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
-
-                PopupWindow popupWindow = new PopupWindow(getActivity());
-                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                popupWindow.setContentView(getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null));
-                popupWindow.setOutsideTouchable(true);
-                popupWindow.setFocusable(true);
-                popupWindow.showAsDropDown(v);
-
-
-                //mPopupWindow = new PopupWindow();
-                //mPopupWindow.isShowing();
-
+                /*
+                // allergyList.txt から his_allergyにデータ格納
+                ArrayList<String> his_allergy_list = new ArrayList<String>();
                 try{
                     AssetManager asset = getResources().getAssets();
                     InputStream in = asset.open("allergyList.txt");
 
                     BufferedReader reader =new BufferedReader(new InputStreamReader(in,"UTF-8"));
                     String s;
-                    String his_allergy="";
+
                     while ((s = reader.readLine()) != null) {
-                        Log.v("品目", s.toString());
-                        //his_allergy = his_allergy + s.toString() + ",";
+                        his_allergy_list.add(s.toString());
                     }
 
-
-
-                    button.setText(his_allergy);
                 }catch(IOException e){
                     e.printStackTrace();
                 }
+                */
+                PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setContentView(getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null));
+                //popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+
+/*
+                InputStream is = getResources()
+                        .openRawResource(R.layout.popup_allergy_list);
+
+                Persister persister = new Persister();
+                Book book = null;
+                try {
+                    // 読み込む
+                    book = persister.read(Book.class, is);
+                } catch (Exception e) {
+                }
+*/
+                /*
+                // his_allergy の個数だけチェックボックス生成
+                CheckBox[] allergy_button = new CheckBox[his_allergy_list.size()];
+                //getActivity().findViewById(R.layout.popup_allergy_list);
+
+                //画面サイズを取得してLeyoutのサイズ決定(1/2サイズ)
+                WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                int width = (int)display.getWidth();
+                int height = (int)display.getHeight();
+                width = (int)(width/Math.sqrt(2.0));
+                height = (int)(height/Math.sqrt(2.0));
+
+                //画面外にはみ出るのでScrollViewに
+                ScrollView scrollView = new ScrollView(getActivity().getApplicationContext());
+                getActivity().setContentView(scrollView);
+
+                LinearLayout layout = new LinearLayout(getActivity().getApplicationContext());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+                layout.setLayoutParams(params);
+                //layout.setBackgroundColor(getResources().getColor(R.color.black));
+                layout.setOrientation(LinearLayout.VERTICAL);
+                scrollView.addView(layout);
+
+
+                for (int i = 0; i < his_allergy_list.size(); i++){
+                    //allergy_button[i].setId( i+1000 );    // リソースID設定 ( ******適当です********　←　ここ重要！！)
+
+
+                    allergy_button[i] = new CheckBox(getActivity().getApplicationContext());
+                    allergy_button[i].setText(his_allergy_list.get(i));    //ボタンテキスト設定
+
+
+                    // レイアウトにチェックボックスを追加
+                    layout.addView(allergy_button[i], new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+                }
+                //getActivity().setContentView(scrollView);
+                //getActivity().setContentView(layout);
+
+
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+                mPopupWindow = new PopupWindow();
+                View popupView = getLayoutInflater().inflate(, null);
+
+
+                PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);*/
+/*
+                PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setContentView(getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null));
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+*/
+
+
+                //mPopupWindow = new PopupWindow();
+                //mPopupWindow.isShowing();
+
+
             }
         });
+
+
+
 
     }
 
