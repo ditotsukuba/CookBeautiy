@@ -9,14 +9,45 @@
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/listView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-        <!--android:layout_marginTop="75dp"
-        android:layout_marginRight="200dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="30dp"-->
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:layout_marginRight="400dp"
+        android:layout_marginLeft="30dp"
+       >
+        <!--
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="30dp"
+        -->
     </ListView>
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/Suggest_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="600dp"
+        >
+        <!--
+
+        android:layout_marginBottom="30dp"
+        -->
+    </ListView>
+
+    <TextView
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:textSize="25dp"
+        android:text="彼へのおすすめメニュー"
+        android:textColor="@color/red"
+        android:id="@+id/suggest_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="600dp"/>
+
+
 </FrameLayout>
 
     <!--Right25dp-->

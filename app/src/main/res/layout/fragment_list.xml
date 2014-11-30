@@ -5,10 +5,7 @@
     android:orientation="horizontal"
     android:background="#eeeeee">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragmenttext"/>
+
 <!--
 
     <ImageView
