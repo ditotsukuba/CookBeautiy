@@ -1,10 +1,12 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,11 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 public class SettingFragment extends Fragment {
     private  DBHelper mDbHelper;
+    private  PopupWindow mPopupWindow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -25,31 +29,63 @@ public class SettingFragment extends Fragment {
         // ボタンを取得して、ClickListenerをセット
         return v;
     }
-
     @Override
     public void onStart() {
         super.onStart();
-        final Button button = (Button)getActivity().findViewById(R.id.button_reset);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button_r = (Button)getActivity().findViewById(R.id.button_reset);
+        Button button_v = (Button)getActivity().findViewById(R.id.button_ver);
 
+        button_r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               View popup = getActivity().getLayoutInflater().inflate(R.layout.setting_popup,null);
-                PopupWindow popupWindow = new PopupWindow(getActivity());
+                View popup = getActivity().getLayoutInflater().inflate(R.layout.setting_popup,null);
+                Button button_y = (Button)popup.findViewById(R.id.popup_yes);
+                Button button_n = (Button)popup.findViewById(R.id.popup_no);
+                final PopupWindow popupWindow = new PopupWindow(getActivity());
                 popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 popupWindow.setContentView(popup);
                 popupWindow.setOutsideTouchable(true);
                 popupWindow.setFocusable(true);
-                popupWindow.showAsDropDown(v);
+                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+
+                button_y.setOnClickListener(new View.OnClickListener() {
+                             @Override
+                             public void onClick(View v) {
+                                 Toast.makeText(getActivity(), "リセットしました", Toast.LENGTH_SHORT).show();
+                                 popupWindow.dismiss();
+
+                             }
+                });
+                button_n.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
             }
-        // TODO 自動生成されたメソッド・スタブ
-       // switch(v.getId()){
-         //   case R.id.button_reset:
-           //     Log.d("My Test", "Clicked!");
-           // case R.id.button_ver:
-             //   Log.d("My Test", "Clicked!!");
 
         });
+button_v.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        View popup = getActivity().getLayoutInflater().inflate(R.layout.ver_popup,null);
+        Button button_y2 = (Button)popup.findViewById(R.id.popup_yes2);
+        final PopupWindow popupWindow = new PopupWindow(getActivity());
+        popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow.setContentView(popup);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+
+    button_y2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            popupWindow.dismiss();
+        }
+    });
+    }
+});
 
     }
 

@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+   android:orientation="vertical"
+    >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本当に彼氏データを削除してもよろしいですか？"
+        android:textSize="30sp"
+        android:padding='8dp'/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <Button
         android:id="@+id/popup_yes"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="おｋ"
-        android:textSize="50sp" />
+        android:textSize="25sp" />
     <Button
-        android:layout_marginTop="80dp"
         android:id="@+id/popup_no"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="25dp"
         android:layout_height="wrap_content"
         android:text="いやよ"
-        android:textSize="50sp" />
-</FrameLayout>
+        android:textSize="25sp" />
+    </LinearLayout>
+    </LinearLayout>
