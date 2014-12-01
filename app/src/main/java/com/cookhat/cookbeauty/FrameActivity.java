@@ -27,8 +27,9 @@ public class FrameActivity extends FragmentActivity {
 
 
 
-    private RecipeFragment recipe = new RecipeFragment();
+    //private RecipeFragment recipe = new RecipeFragment();
     private int state = 0; //0:home 1:list 2:kareshi 3:setting 4:recipe
+
 
 
     @Override
@@ -80,37 +81,39 @@ public class FrameActivity extends FragmentActivity {
 
         if (pointY < endY) {
             if (pointX < (int) endX * (1.0 / Num) && (state != 0)) {
-                Log.v("Test:","Touched");
+               // Log.v("Test:","Touched");
                 Drawable img = getResources().getDrawable(R.drawable.tab1);
                 ImageView im =(ImageView)findViewById(R.id.tab_picture);
                 im.setImageDrawable(img);
-                Log.v("Test:","TabChanged");
+               // Log.v("Test:","TabChanged");
                 HomeFragment home = new HomeFragment();
+                tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 tx.replace(R.id.tab_content,home);
                 tx.addToBackStack(null);
                 tx.commit();
-                Log.v("Test:","Transaction");
+                //Log.v("Test:","Transaction");
                 state = 0;
                 //Intent intent = new Intent(getApplication(), MainActivity.class);
                 //startActivity(intent);
                 // MainActivity.this.finish();
                 //Log.d("main","");
             } else if ((int) (endX * (1.0 / Num)) <= pointX & pointX < (int) (endX * (2.0 / Num))&&(state != 1)) {
-                Log.v("Test:","Touched");
+               // Log.v("Test:","Touched");
                 Drawable img = getResources().getDrawable(R.drawable.tab2);
                 ImageView im =(ImageView)findViewById(R.id.tab_picture);
                 im.setImageDrawable(img);
-                Log.v("Test:","TabChanged");
+               // Log.v("Test:","TabChanged");
                 AnimationFragment list = new AnimationFragment();
-                Log.v("Test:","NewInstance");
-                tx.replace(R.id.tab_content,list);
+                //Log.v("Test:","NewInstance");
                 tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                tx.replace(R.id.tab_content,list);
 
-                Log.v("Test:", "Replace");
+
+                //Log.v("Test:", "Replace");
                 tx.addToBackStack(null);
-                Log.v("Test:","BackStack");
+                //Log.v("Test:","BackStack");
                 tx.commit();
-                Log.v("Test:","Transaction");
+                //Log.v("Test:","Transaction");
                 state = 1;
                // Intent intent = new Intent(getApplication(), ListActivity.class);
                 //startActivity(intent);
@@ -122,7 +125,7 @@ public class FrameActivity extends FragmentActivity {
                 ImageView im =(ImageView)findViewById(R.id.tab_picture);
                 im.setImageDrawable(img);
                 KareshiDataFragment karedata = new KareshiDataFragment();
-
+                tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 tx.replace(R.id.tab_content,karedata);
                 tx.addToBackStack(null);
                 tx.commit();
@@ -136,6 +139,7 @@ public class FrameActivity extends FragmentActivity {
                 im.setImageDrawable(img);
 
                 SettingFragment setting = new SettingFragment();
+                tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 tx.replace(R.id.tab_content,setting);
                 tx.addToBackStack(null);
                 tx.commit();
@@ -170,13 +174,18 @@ public class FrameActivity extends FragmentActivity {
             bundle.putInt("id", no);
 
             recipe.setArguments(bundle);
-
+            tx.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             tx.replace(R.id.tab_content, recipe);
 
             tx.addToBackStack(null);
             tx.commit();
             state = 4;
         }
+    }
+
+    public void changeState(int s)
+    {
+        state = s;
     }
 
 }

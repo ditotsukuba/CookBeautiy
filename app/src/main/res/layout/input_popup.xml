@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputpop_text"
+
+        android:textSize="30dp"
+        android:text="入力して下さい"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:id="@+id/inputtextbox"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/inputpop_text"/>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_below="@id/inputtextbox"
+        android:layout_gravity="center_horizontal"
+
+        />
+    <Button
+        android:id="@+id/editButton_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="キャンセル"
+        android:layout_below="@id/inputtextbox"
+        android:layout_toRightOf="@id/editButton"
+        android:layout_gravity="center_horizontal"
+        />
+
+</RelativeLayout>
