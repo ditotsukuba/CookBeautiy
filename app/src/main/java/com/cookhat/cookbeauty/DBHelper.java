@@ -105,8 +105,8 @@ public class DBHelper extends SQLiteOpenHelper {
                                 reco_buf += 1.0;
                             }
                         }
-                        count++;
-                        Log.v("IteratorID="+(String)data.get(i).get("id"),Integer.toString(count));
+                       // count++;
+                        //Log.v("IteratorID="+(String)data.get(i).get("id"),Integer.toString(count));
                         reco_buf *=2.0;
 
                     }
@@ -168,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
             }
-            Log.v("ID:"+(String)data.get(i).get("id"),Double.toString(reco));
+            //Log.v("ID:"+(String)data.get(i).get("id"),Double.toString(reco));
             WriteDBRecommend(Integer.parseInt((String) data.get(i).get("id")), reco);
 
         }
@@ -187,6 +187,23 @@ public class DBHelper extends SQLiteOpenHelper {
         whereArgs[0] = Integer.toString(id);
 
             v.put("rating", rate);
+
+
+        mDatabase.update("table_recipeLists", v, whereClause, whereArgs);
+        mDatabase.close();
+    }
+    public void WriteDBMemo(int id,String memo)
+    {
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues v = new ContentValues();
+
+
+        String whereClause = "id = ?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(id);
+
+        v.put("memo", memo);
 
 
         mDatabase.update("table_recipeLists", v, whereClause, whereArgs);
@@ -419,6 +436,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 rowData.put("pain",cursor.getString(8));
                 rowData.put("recommend",cursor.getString(9));
                 rowData.put("cooked",cursor.getString(10));
+                rowData.put("memo",cursor.getString(11));
+                rowData.put("ingredients",cursor.getString(12));
 
 
 

@@ -64,6 +64,7 @@
         android:scaleY="0.5"
         -->
     <ImageView
+        android:id="@+id/memo_window"
         android:layout_width="450dp"
         android:layout_height="180dp"
         android:scaleType="fitXY"
@@ -75,7 +76,21 @@
 
         android:src="@drawable/window_memo"
         />
+    <TextView
+        android:id="@+id/memo_text"
+        android:layout_width="430dp"
+        android:layout_height="165dp"
+        android:scaleType="fitXY"
+        android:text="タップして入力してください"
+        android:textSize="25dp"
+
+        android:layout_marginLeft="468dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="285dp" />
+
     <ImageView
+        android:id="@+id/memo"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:scaleType="fitXY"
@@ -86,7 +101,9 @@
         android:layout_marginTop="210dp"
 
         android:src="@drawable/memo"
+
         />
+
 
 
 

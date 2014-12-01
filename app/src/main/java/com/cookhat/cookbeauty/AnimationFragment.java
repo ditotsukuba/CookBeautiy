@@ -35,6 +35,7 @@ public class AnimationFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         container.removeAllViews();
+        frame.changeState(1);
 
         mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
 
@@ -116,6 +117,7 @@ public class AnimationFragment extends Fragment{
                 //rowData = columus.get(o);
                 name_buf = (String)columns.get(o).get("name");
                 key = Integer.parseInt((String) columns.get(o).get("id"));
+                /*
                 Log.v("料理名", name_buf);
                 Log.v("ジャンル", (String) columns.get(o).get("genre"));
                 Log.v("甘味", (String) columns.get(o).get("amami"));
@@ -126,7 +128,7 @@ public class AnimationFragment extends Fragment{
                 Log.v("レート", (String) columns.get(o).get("rating"));
                 Log.v("オススメ度", (String) columns.get(o).get("recommend"));
                 Log.v("調理済みフラグ", (String) columns.get(o).get("cooked"));
-
+                */
                 id_number[key - 1] = key;
 
                 name[key - 1] = name_buf;
@@ -159,7 +161,7 @@ public class AnimationFragment extends Fragment{
 
             // リストアイテムの間の区切り線を非表示にする
             list.setDivider(null);
-
+            Log.v("Test","Before Listener");
             // アイテムクリック時ののイベントを追加
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent,
@@ -171,6 +173,7 @@ public class AnimationFragment extends Fragment{
                     // 表示列の料理IDの取得
                     int no = listOrder[pos];
                     //Log.v("test", "test:"+String.valueOf(test));
+                    Log.v("ID",Integer.toString(no));
                     frame.changeRecipeFragment(no);
 
 
