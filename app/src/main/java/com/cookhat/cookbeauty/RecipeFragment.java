@@ -106,6 +106,14 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        //材料関連処理
+
+
+        TextView ing = (TextView)v.findViewById(R.id.ingredients);
+        ing.setText(rowData.get("ingredients"));
+        ing.setTextColor(Color.parseColor("#000000"));
+
+
         //Memo機能関連処理
 
         final ImageView memo = (ImageView)v.findViewById(R.id.memo_window);

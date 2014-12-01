@@ -438,6 +438,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 rowData.put("cooked",cursor.getString(10));
                 rowData.put("memo",cursor.getString(11));
                 rowData.put("ingredients",cursor.getString(12));
+                rowData.put("allergy",cursor.getString(13));
 
 
 

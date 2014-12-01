@@ -13,8 +13,10 @@
         android:text="すごくお米がたべたい"
         android:textColor="@color/black"
         android:id="@+id/recipe_name"/>
+
+
     <ImageView
-        android:id="@+id/ingredients"
+        android:id="@+id/ringnote"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginLeft="20dp"
@@ -25,7 +27,31 @@
         android:src="@drawable/ringnote"
         >
 
+
     </ImageView>
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="340dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="130dp"
+        android:textSize="25dp"
+        android:text="・レトルトカレー\n・米"
+        android:textColor="@color/black"
+        android:id="@+id/ingredients"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="135dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="80dp"
+        android:textSize="30dp"
+        android:text="主な材料の例"
+        android:textColor="@color/orange"
+        />
     <ImageView
         android:layout_width="303dp"
         android:layout_height="90dp"
