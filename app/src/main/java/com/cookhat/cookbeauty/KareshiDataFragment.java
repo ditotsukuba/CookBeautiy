@@ -24,6 +24,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -171,7 +172,7 @@ public class KareshiDataFragment extends Fragment {
                 try {
                     InputStream in = null;
                     try {   //まずはローカルファイルを検索
-                        in = getActivity().getApplicationContext().openFileInput("allergy.text");
+                        in = (InputStream)getActivity().getApplicationContext().openFileInput("allergy.txt");
                     }
                     catch  (IOException e) {    //無ければassetsデータを使う
                         AssetManager asset = getResources().getAssets();
@@ -447,153 +448,186 @@ public class KareshiDataFragment extends Fragment {
 
                     @Override
                     public void onClick(View v) {
+                        String text = "";
                         String file_data = "";
                         String file_data_next = "";
                         if(ebi_checkbox.isChecked()){
                             file_data = file_data + "えび,1\n";
+                            text = text + "えび ";
                         }else{
                             file_data_next = file_data_next + "えび,0\n";
                         }
                         if(kani_checkbox.isChecked()){
                             file_data = file_data + "かに,1\n";
+                            text = text + "かに ";
                         }else{
                             file_data_next = file_data_next + "かに,0\n";
                         }
                         if(komugi_checkbox.isChecked()){
                             file_data = file_data + "小麦,1\n";
+                            text = text + "小麦 ";
                         }else{
                             file_data_next = file_data_next + "小麦,0\n";
                         }
                         if(soba_checkbox.isChecked()){
                             file_data = file_data + "そば,1\n";
+                            text = text + "そば ";
                         }else{
                             file_data_next = file_data_next + "そば,0\n";
                         }
                         if(tamago_checkbox.isChecked()){
                             file_data = file_data + "卵,1\n";
+                            text = text + "卵 ";
                         }else{
                             file_data_next = file_data_next + "卵,0\n";
                         }
                         if(titi_checkbox.isChecked()){
                             file_data = file_data + "乳,1\n";
+                            text = text + "乳 ";
                         }else{
                             file_data_next = file_data_next + "乳,0\n";
                         }
                         if(rakkasei_checkbox.isChecked()){
                             file_data = file_data + "落花生,1\n";
+                            text = text + "落花生 ";
                         }else{
                             file_data_next = file_data_next + "落花生,0\n";
                         }
                         if(awabi_checkbox.isChecked()){
                             file_data = file_data + "あわび,1\n";
+                            text = text + "あわび ";
                         }else{
                             file_data_next = file_data_next + "あわび,0\n";
                         }
                         if(ika_checkbox.isChecked()){
                             file_data = file_data + "いか,1\n";
+                            text = text + "いか ";
                         }else{
                             file_data_next = file_data_next + "いか,0\n";
                         }
                         if(ikura_checkbox.isChecked()){
                             file_data = file_data + "いくら,1\n";
+                            text = text + "いくら ";
                         }else{
                             file_data_next = file_data_next + "いくら,0\n";
                         }
                         if(sake_checkbox.isChecked()){
                             file_data = file_data + "サケ,1\n";
+                            text = text + "サケ ";
                         }else{
                             file_data_next = file_data_next + "サケ,0\n";
                         }
                         if(saba_checkbox.isChecked()){
                             file_data = file_data + "サバ,1\n";
+                            text = text + "サバ ";
                         }else{
                             file_data_next = file_data_next + "サバ,0\n";
                         }
                         if(kasyunattu_checkbox.isChecked()){
                             file_data = file_data + "カシューナッツ,1\n";
+                            text = text + "カシューナッツ ";
                         }else{
                             file_data_next = file_data_next + "カシューナッツ,0\n";
                         }
                         if(kurumi_checkbox.isChecked()){
                             file_data = file_data + "くるみ,1\n";
+                            text = text + "くるみ ";
                         }else{
                             file_data_next = file_data_next + "くるみ,0\n";
                         }
                         if(daizu_checkbox.isChecked()){
                             file_data = file_data + "大豆,1\n";
+                            text = text + "大豆 ";
                         }else{
                             file_data_next = file_data_next + "大豆,0\n";
                         }
                         if(goma_checkbox.isChecked()){
                             file_data = file_data + "ゴマ,1\n";
+                            text = text + "ゴマ ";
                         }else{
                             file_data_next = file_data_next + "ゴマ,0\n";
                         }
                         if(matutake_checkbox.isChecked()){
                             file_data = file_data + "松茸,1\n";
+                            text = text + "松茸 ";
                         }else{
                             file_data_next = file_data_next + "松茸,0\n";
                         }
                         if(yamaimo_checkbox.isChecked()){
                             file_data = file_data + "山芋,1\n";
+                            text = text + "山芋 ";
                         }else{
                             file_data_next = file_data_next + "山芋,0\n";
                         }
                         if(orenzi_checkbox.isChecked()){
                             file_data = file_data + "オレンジ,1\n";
+                            text = text + "オレンジ ";
                         }else{
                             file_data_next = file_data_next + "オレンジ,0\n";
                         }
                         if(kiui_checkbox.isChecked()){
                             file_data = file_data + "キウイフルーツ,1\n";
+                            text = text + "キウイフルーツ ";
                         }else{
                             file_data_next = file_data_next + "キウイフルーツ,0\n";
                         }
                         if(banana_checkbox.isChecked()){
                             file_data = file_data + "バナナ,1\n";
+                            text = text + "バナナ ";
                         }else{
                             file_data_next = file_data_next + "バナナ,0\n";
                         }
                         if(ringo_checkbox.isChecked()){
                             file_data = file_data + "りんご,1\n";
+                            text = text + "りんご ";
                         }else{
                             file_data_next = file_data_next + "りんご,0\n";
                         }
                         if(momo_checkbox.isChecked()){
                             file_data = file_data + "桃,1\n";
+                            text = text + "桃 ";
                         }else{
                             file_data_next = file_data_next + "桃,0\n";
                         }
                         if(zeratin_checkbox.isChecked()){
                             file_data = file_data + "ゼラチン,1\n";
+                            text = text + "ゼラチン ";
                         }else{
                             file_data_next = file_data_next + "ゼラチン,0\n";
                         }
                         if(gyuuniku_checkbox.isChecked()){
                             file_data = file_data + "牛肉,1\n";
+                            text = text + "牛肉 ";
                         }else{
                             file_data_next = file_data_next + "牛肉,0\n";
                         }
                         if(butaniku_checkbox.isChecked()){
                             file_data = file_data + "豚肉,1\n";
+                            text = text + "豚肉 ";
                         }else{
                             file_data_next = file_data_next + "豚肉,0\n";
                         }
                         if(toriniku_checkbox.isChecked()){
                             file_data = file_data + "鶏肉,1\n";
+                            text = text + "鶏肉 ";
                         }else{
                             file_data_next = file_data_next + "鶏肉,0\n";
                         }
+
+                        if (text==null)
+                            allergy_button.setText("なし");
+                        else
+                            allergy_button.setText(text);
 
                         // Write
                         {
                             try {
                                 String full_data = file_data + file_data_next;
                                 getActivity().deleteFile("allergy.txt");
-                                OutputStream out = getActivity().openFileOutput("allergy.txt",Context.MODE_PRIVATE);
-                                PrintWriter writer = new PrintWriter(new OutputStreamWriter(out,"UTF-8"));
+                                OutputStream out = getActivity().openFileOutput("allergy.txt", Context.MODE_PRIVATE);
+                                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                                 writer.append(full_data);
-
+                                writer.flush();
 
                                 /*FileOutputStream fileOutputStream = getActivity().openFileOutput("allergy.txt", Context.MODE_PRIVATE);
                                 OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream);
