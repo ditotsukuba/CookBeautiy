@@ -8,13 +8,17 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -39,6 +43,7 @@ import java.util.Map;
 import java.util.zip.Inflater;
 import android.view.View.OnClickListener;
 
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -534,13 +539,53 @@ public class KareshiDataFragment extends Fragment {
             }
         });
 
-
+        //好きなジャンルを選択したらデータベースに格納
         Button genre_japanese = (Button)getActivity().findViewById(R.id.japanese);
         genre_japanese.setOnClickListener(new japaneseClickListener());
         Button genre_europe = (Button)getActivity().findViewById(R.id.europe);
         genre_europe.setOnClickListener(new europeClickListener());
         Button genre_chinese = (Button)getActivity().findViewById(R.id.chinese);
         genre_chinese.setOnClickListener(new chineseClickListener());
+
+        //彼氏の名前を入力したらデータベースに格納
+        final EditText boyfriend_name = (EditText)getActivity().findViewById(R.id.edit_name);
+        boyfriend_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //キーボード表示を制御するためのオブジェクト
+                InputMethodManager inputMethodManager =  (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (event.getAction() == KeyEvent.ACTION_DOWN  && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    //Toast.makeText(getActivity(), boyfriend_name.getText().toString(), Toast.LENGTH_SHORT).show();
+                    //エンターキーでキーボードを非表示
+                    inputMethodManager.hideSoftInputFromWindow(boyfriend_name.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
+                    DBHelper mDBHelper = new DBHelper(getActivity());
+                    mDBHelper.putKareshi("name",boyfriend_name.getText().toString());
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+        boyfriend_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                // フォーカスを受け取ったとき
+                if(hasFocus){
+                    // ソフトキーボードを表示する
+                    inputMethodManager.showSoftInput(v, InputMethodManager.SHOW_FORCED);
+                }
+                // フォーカスが外れたとき
+                else{
+                    // ソフトキーボードを閉じる
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
+                    Toast.makeText(getActivity(), "エンターで確定してください", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
 
@@ -551,9 +596,6 @@ public class KareshiDataFragment extends Fragment {
         public void onClick(View view) {
 
             DBHelper mDBHelper = new DBHelper(getActivity());
-             /*読み込み用*/
-
-            /*ここまで*/
 
             mDBHelper.putKareshi("genre","0");
             Map<String,String> data = mDBHelper.getKareshi();
@@ -583,6 +625,42 @@ public class KareshiDataFragment extends Fragment {
             //Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+/*
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            //setContentView(R.layout.main);
+
+            EditText editText = (EditText)findViewById(R.id.edit_name);
+            // テキストが変化した際のリスナーをセット
+            editText.addTextChangedListener(this);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            //変更前
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            //変更直前
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            //変更後
+            //Toast.makeText(getActivity(), editable.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPause(){
+            EditText editText = (EditText)findViewById(R.id.edit_name);
+            Toast.makeText(getActivity(), editText.toString(), Toast.LENGTH_SHORT).show();
+        }
+*/
+
 /*
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

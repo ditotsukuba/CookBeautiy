@@ -49,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/kareshi_favorite_genre"
         android:layout_toRightOf="@id/guy"
-        >
+        android:layout_toLeftOf="@+id/kareshi_favorite_menu"
+        android:layout_toStartOf="@+id/kareshi_favorite_menu">
 
         <RadioButton
             android:id="@+id/japanese"
@@ -83,9 +84,10 @@
             android:layout_height="wrap_content"
             android:text="好きなメニュー"
             android:textSize="@dimen/midium_text_size_kareshi"
-            android:layout_toRightOf="@id/guy"
-            android:layout_below="@id/favorite_genre_group"
-         />
+           android:layout_below="@id/edit_name"
+           android:layout_toRightOf="@id/kareshi_favorite_genre"
+           android:layout_toEndOf="@id/kareshi_favorite_genre"
+           android:layout_marginLeft="20dp" />
 <!--
     <Spinner
         android:id="@+id/kareshi_favorite_menu_group"
@@ -97,14 +99,16 @@
         </Spinner>
 -->
     <EditText
+        android:id="@+id/kareshi_favorite_menu_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="memo"
         android:textSize="@dimen/midium_text_size_kareshi"
-        android:id="@+id/kareshi_favorite_menu_memo"
-        android:layout_below="@+id/kareshi_favorite_menu"
-        android:layout_toRightOf="@+id/guy"
-        android:layout_toEndOf="@+id/guy" />
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/kareshi_favorite_menu"
+        android:layout_toRightOf="@id/favorite_genre_group"
+        android:layout_toEndOf="@id/favorite_genre_group"
+        />
 
     <TextView
         android:id="@+id/kareshi_allergy"
@@ -113,17 +117,18 @@
         android:text="アレルギー"
         android:textSize="@dimen/midium_text_size_kareshi"
         android:layout_toRightOf="@id/guy"
-        android:layout_below="@id/kareshi_favorite_menu_memo"
+        android:layout_below="@id/favorite_genre_group"
          />
 
     <Button
         android:id="@+id/allergyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:text="default TEXT"
+        android:background="@drawable/button_background"
         android:layout_below="@id/kareshi_allergy"
-        android:layout_toRightOf="@id/guy"
-        />
+        android:layout_toRightOf="@+id/guy"
+        android:layout_toEndOf="@+id/guy" />
 
 
 
