@@ -1,6 +1,7 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.media.Rating;
@@ -10,14 +11,17 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +56,8 @@ public class RecipeFragment extends Fragment {
         Integer id = getArguments().getInt("id");
         load_id = id;
         View v = inflater.inflate(R.layout.fragment_recipe, container, false);
-
+        ImageView allergy = (ImageView)v.findViewById(R.id.allergy_view);
+        allergy.setVisibility(View.INVISIBLE);
 
         //DB関連処理
         mDbHelper = new DBHelper(getActivity());
@@ -112,6 +117,7 @@ public class RecipeFragment extends Fragment {
         TextView ing = (TextView)v.findViewById(R.id.ingredients);
         ing.setText(rowData.get("ingredients"));
         ing.setTextColor(Color.parseColor("#000000"));
+        //DialogFragmentでやってみる
 
 
         //Memo機能関連処理
@@ -120,19 +126,45 @@ public class RecipeFragment extends Fragment {
         memo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 final View popup = getActivity().getLayoutInflater().inflate(R.layout.input_popup, null);
                 final PopupWindow popupWindow = new PopupWindow(getActivity());
                 popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 popupWindow.setContentView(popup);
                 popupWindow.setOutsideTouchable(false);
                 popupWindow.setFocusable(true);
-                popupWindow.showAtLocation(view, Gravity.CENTER_VERTICAL, 0, 0);
+                popupWindow.showAtLocation(popup, Gravity.CENTER_VERTICAL, 0, 0);
+                InputMethodManager im;
+                RelativeLayout rl;
+                im =(InputMethodManager) frame.getSystemService(Context.INPUT_METHOD_SERVICE);
+                rl = (RelativeLayout)popup.findViewById(R.id.inputpopupwindow);
                 final EditText memo_data = (EditText)popup.findViewById(R.id.inputtextbox);
                 if(!rowData.get("memo").equals("タップして入力してください")) {
                     memo_data.setText(rowData.get("memo"));
                 }
                 final Button ok_button = (Button)popup.findViewById(R.id.editButton);
                 final Button cancel_button = (Button)popup.findViewById(R.id.editButton_c);
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        String data = memo_data.getText().toString();
+                        if(data.equals(""))
+                        {
+                            data = "タップして入力してください" ;
+                        }
+                        mDbHelper.WriteDBMemo(load_id,data);
+                        if(!data.equals("タップして入力してください")) {
+                            memoText.setText(data);
+                            memoText.setTextColor(Color.parseColor("#000000"));
+                        }
+                        else{
+                            memoText.setText("タップして入力してください");
+                            memoText.setTextColor(Color.parseColor("#808080"));
+                        }
+                    }
+                });
+
+
                 ok_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
