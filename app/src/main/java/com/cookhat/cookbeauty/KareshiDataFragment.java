@@ -58,7 +58,7 @@ import android.util.Xml;
 public class KareshiDataFragment extends Fragment {
 
     private PopupWindow mPopupWindow;
-
+    mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
 
 
     /*
@@ -199,16 +199,6 @@ public class KareshiDataFragment extends Fragment {
                             not_his_allergy.add(temp[0]);
                     }
 
-                    /*
-                    if (his_allergy.isEmpty())
-                        allergy_button.setText("なし");
-                    else {
-                        String temp_string = "";
-                        for(int i=0; i < his_allergy.size(); i++)
-                            temp_string = temp_string + his_allergy.get(i) + " ";
-                        allergy_button.setText(temp_string);
-                    }
-                    */
 
                     in.close();
                 } catch (IOException e) {
@@ -283,10 +273,8 @@ public class KareshiDataFragment extends Fragment {
                         kani_checkbox.setChecked(true);
                     if(allergy.equals("小麦"))
                         komugi_checkbox.setChecked(true);
-                    if(allergy.equals("そば")) {
+                    if(allergy.equals("そば"))
                         soba_checkbox.setChecked(true);
-                        //getActivity().setContentView(soba_checkbox);
-                    }
                     if(allergy.equals("卵"))
                         tamago_checkbox.setChecked(true);
                     if(allergy.equals("乳"))
@@ -335,121 +323,6 @@ public class KareshiDataFragment extends Fragment {
                         toriniku_checkbox.setChecked(true);
 
                 }
-
-/*
-                InputStream is = null;
-                try {
-                    is = getActivity().openFileInput("res/layout/popup_allergy_list.xml");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                //InputStream is = (InputStream) getResources().getLayout(R.layout.popup_allergy_list);
-
-                XmlPullParser xpp = Xml.newPullParser();
-                try {
-                    xpp.setInput(is, "UTF-8");
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                }
-
-                int eventType = 0;
-                try {
-                    eventType = xpp.getEventType();
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                }
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if(eventType == XmlPullParser.START_TAG) {
-                        if (xpp.getName().equals("checkbox"))
-                            Log.v("start tag", xpp.getName());
-                    } else if(eventType == XmlPullParser.TEXT) {
-                        Log.v("text", xpp.getName());
-                    }
-
-                    try {
-                        eventType = xpp.next();//increment
-                        Log.v("test", xpp.getName());
-                    } catch (XmlPullParserException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-*/
-
-/*
-                InputStream is = getResources()
-                        .openRawResource(R.layout.popup_allergy_list);
-
-                Persister persister = new Persister();
-                Book book = null;
-                try {
-                    // 読み込む
-                    book = persister.read(Book.class, is);
-                } catch (Exception e) {
-                }
-*/
-                /*
-                // his_allergy の個数だけチェックボックス生成
-                CheckBox[] allergy_button = new CheckBox[his_allergy_list.size()];
-                //getActivity().findViewById(R.layout.popup_allergy_list);
-
-                //画面サイズを取得してLeyoutのサイズ決定(1/2サイズ)
-                WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                int width = (int)display.getWidth();
-                int height = (int)display.getHeight();
-                width = (int)(width/Math.sqrt(2.0));
-                height = (int)(height/Math.sqrt(2.0));
-
-                //画面外にはみ出るのでScrollViewに
-                ScrollView scrollView = new ScrollView(getActivity().getApplicationContext());
-                getActivity().setContentView(scrollView);
-
-                LinearLayout layout = new LinearLayout(getActivity().getApplicationContext());
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-                layout.setLayoutParams(params);
-                //layout.setBackgroundColor(getResources().getColor(R.color.black));
-                layout.setOrientation(LinearLayout.VERTICAL);
-                scrollView.addView(layout);
-
-
-                for (int i = 0; i < his_allergy_list.size(); i++){
-                    //allergy_button[i].setId( i+1000 );    // リソースID設定 ( ******適当です********　←　ここ重要！！)
-
-
-                    allergy_button[i] = new CheckBox(getActivity().getApplicationContext());
-                    allergy_button[i].setText(his_allergy_list.get(i));    //ボタンテキスト設定
-
-
-                    // レイアウトにチェックボックスを追加
-                    layout.addView(allergy_button[i], new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT));
-
-
-                }
-                //getActivity().setContentView(scrollView);
-                //getActivity().setContentView(layout);
-
-
-                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
-                mPopupWindow = new PopupWindow();
-                View popupView = getLayoutInflater().inflate(, null);
-
-
-                PopupWindow popupWindow = new PopupWindow(getActivity());
-                popupWindow.setOutsideTouchable(true);
-                popupWindow.setFocusable(true);
-                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);*/
-/*
-                PopupWindow popupWindow = new PopupWindow(getActivity());
-                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                popupWindow.setContentView(getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null));
-                popupWindow.setOutsideTouchable(true);
-                popupWindow.setFocusable(true);
-                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
-*/
 
 
                 accept_button.setOnClickListener(new OnClickListener() {
@@ -637,20 +510,11 @@ public class KareshiDataFragment extends Fragment {
                                 writer.append(full_data);
                                 writer.flush();
 
-                                InputStream in = getActivity().openFileInput("allergy.txt");
-                                if (in==null)
-                                    Log.v("in", "is null");
-                                in.close();
-                                /*FileOutputStream fileOutputStream = getActivity().openFileOutput("allergy.txt", Context.MODE_PRIVATE);
-                                OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream);
-                                writer.write(full_data);
-                                */
-
                                 writer.close();
                             } catch (FileNotFoundException e) {
                             } catch (IOException e) {
                             }
-                            Toast.makeText(getActivity(), "変更されました？", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "変更されました？", Toast.LENGTH_SHORT).show();
                             popupWindow.dismiss();
                         }
 
@@ -671,8 +535,35 @@ public class KareshiDataFragment extends Fragment {
         });
 
 
+        Button genre_japanese = (Button)getActivity().findViewById(R.id.japanese);
+        genre_japanese.setOnClickListener(new japaneseClickListener());
+        Button genre_europe = (Button)getActivity().findViewById(R.id.europe);
+        genre_europe.setOnClickListener(new europeClickListener());
+        Button genre_chinese = (Button)getActivity().findViewById(R.id.chinese);
+        genre_chinese.setOnClickListener(new chineseClickListener());
 
 
+
+    }
+
+    public class japaneseClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+
+            Toast.makeText(getActivity(), "和", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public class europeClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), "洋", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public class chineseClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
+        }
     }
 /*
     // TODO: Rename method, update argument and hook method into UI event
