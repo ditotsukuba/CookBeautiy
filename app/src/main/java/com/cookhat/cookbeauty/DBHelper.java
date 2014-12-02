@@ -450,7 +450,7 @@ public class DBHelper extends SQLiteOpenHelper {
             mDatabase.update("kareshi_data", v, whereClause, whereArgs);
         }
         else if(column.equals("allergy")){
-            v.put("genre",data);
+            v.put("allergy",data);
             mDatabase.update("kareshi_data", v, whereClause, whereArgs);
         }
 
