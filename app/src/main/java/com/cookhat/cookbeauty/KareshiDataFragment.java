@@ -128,9 +128,13 @@ public class KareshiDataFragment extends Fragment {
         try {
             InputStream in = null;
             try {   //まずはローカルファイルを検索
-                in = getActivity().getApplicationContext().openFileInput("allergy.text");
+                in = getActivity().getApplicationContext().openFileInput("allergy.txt");
+
+
             }
             catch  (IOException e) {    //無ければassetsデータを使う
+                if (in==null)
+                    Log.v("in", "is null");
                 AssetManager asset = getResources().getAssets();
                 in = asset.open("allergy.txt");
             }
@@ -173,6 +177,8 @@ public class KareshiDataFragment extends Fragment {
                     InputStream in = null;
                     try {   //まずはローカルファイルを検索
                         in = (InputStream)getActivity().getApplicationContext().openFileInput("allergy.txt");
+                        if (in==null)
+                            Log.v("in", "is null");
                     }
                     catch  (IOException e) {    //無ければassetsデータを使う
                         AssetManager asset = getResources().getAssets();
@@ -187,12 +193,13 @@ public class KareshiDataFragment extends Fragment {
                     not_his_allergy.clear();
                     while ((s = reader.readLine()) != null) {
                         String[] temp = s.toString().split(",");
-                        if (Integer.parseInt(temp[1]) == 1)    // 1 がアレルギー（0は何もない）
+                        if (temp[1].equals("1"))    // 1 がアレルギー（0は何もない）
                             his_allergy.add(temp[0]);
                         else
                             not_his_allergy.add(temp[0]);
                     }
 
+                    /*
                     if (his_allergy.isEmpty())
                         allergy_button.setText("なし");
                     else {
@@ -201,6 +208,7 @@ public class KareshiDataFragment extends Fragment {
                             temp_string = temp_string + his_allergy.get(i) + " ";
                         allergy_button.setText(temp_string);
                     }
+                    */
 
                     in.close();
                 } catch (IOException e) {
@@ -614,7 +622,7 @@ public class KareshiDataFragment extends Fragment {
                             file_data_next = file_data_next + "鶏肉,0\n";
                         }
 
-                        if (text==null)
+                        if (text.equals(""))
                             allergy_button.setText("なし");
                         else
                             allergy_button.setText(text);
@@ -629,6 +637,10 @@ public class KareshiDataFragment extends Fragment {
                                 writer.append(full_data);
                                 writer.flush();
 
+                                InputStream in = getActivity().openFileInput("allergy.txt");
+                                if (in==null)
+                                    Log.v("in", "is null");
+                                in.close();
                                 /*FileOutputStream fileOutputStream = getActivity().openFileOutput("allergy.txt", Context.MODE_PRIVATE);
                                 OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream);
                                 writer.write(full_data);
