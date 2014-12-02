@@ -405,6 +405,58 @@ public class DBHelper extends SQLiteOpenHelper {
         return dataList;
     }
 */
+    public Map<String,String>getKareshi()
+    {
+        Map<String,String>dataList = new HashMap<String, String>();
+        String dbPath = mDatabasePath.getAbsolutePath();
+        String sql_where = "id=1";
+        mDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READONLY);
+        Cursor cursor = mDatabase.query("kareshi_data",null,sql_where,null,null,null,"id DESC",null);
+        cursor.moveToFirst();
+        dataList.put("id",cursor.getString(0));
+        dataList.put("name",cursor.getString(1));
+        dataList.put("genre",cursor.getString(2));
+        dataList.put("menu",cursor.getString(3));
+        dataList.put("allergy",cursor.getString(4));
+        cursor.close();
+        mDatabase.close();
+        return dataList;
+    }
+
+    public void putKareshi(String column,String data){
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues v = new ContentValues();
+
+
+        String whereClause = "id= 1";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(1);
+        if(column.equals("id"))
+        {
+            v.put("id", Integer.parseInt(data));
+            mDatabase.update("kareshi_data", v, whereClause, whereArgs);
+        }
+        else if(column.equals("name")){
+            v.put("name", data);
+            mDatabase.update("kareshi_data", v, whereClause, whereArgs);
+        }
+        else if(column.equals("genre")){
+            v.put("genre",Integer.parseInt(data));
+            mDatabase.update("kareshi_data", v, whereClause, whereArgs);
+        }
+        else if(column.equals("menu")){
+            v.put("menu",data);
+            mDatabase.update("kareshi_data", v, whereClause, whereArgs);
+        }
+        else if(column.equals("allergy")){
+            v.put("genre",data);
+            mDatabase.update("kareshi_data", v, whereClause, whereArgs);
+        }
+
+        mDatabase.close();
+    }
+
     public Map<Integer, Map> findAll(String table, int id, int page) {
         Map<Integer, Map> dataList = new HashMap<Integer, Map>();
 
