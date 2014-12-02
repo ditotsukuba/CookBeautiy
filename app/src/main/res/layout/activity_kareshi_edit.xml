@@ -54,18 +54,24 @@
         <RadioButton
             android:id="@+id/japanese"
             android:text="和"
+            android:textSize="25dp"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <RadioButton
             android:id="@+id/europe"
             android:text="洋"
+            android:textSize="25dp"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <RadioButton
             android:id="@+id/chinese"
             android:text="中"
+            android:textColor="@color/black"
+            android:textSize="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

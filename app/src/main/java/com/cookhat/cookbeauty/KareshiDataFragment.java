@@ -58,7 +58,7 @@ import android.util.Xml;
 public class KareshiDataFragment extends Fragment {
 
     private PopupWindow mPopupWindow;
-    mDbHelper = new DBHelper(this.getActivity().getApplicationContext());
+
 
 
     /*
@@ -550,19 +550,37 @@ public class KareshiDataFragment extends Fragment {
         @Override
         public void onClick(View view) {
 
-            Toast.makeText(getActivity(), "和", Toast.LENGTH_SHORT).show();
+            DBHelper mDBHelper = new DBHelper(getActivity());
+             /*読み込み用*/
+
+            /*ここまで*/
+
+            mDBHelper.putKareshi("genre","0");
+            Map<String,String> data = mDBHelper.getKareshi();
+            Log.v("ジャンル",data.get("genre"));
+
+
+            //Toast.makeText(getActivity(), "和", Toast.LENGTH_SHORT).show();
         }
     }
     public class europeClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(), "洋", Toast.LENGTH_SHORT).show();
+            DBHelper mDBHelper = new DBHelper(getActivity());
+            mDBHelper.putKareshi("genre","1");
+            Map<String,String> data = mDBHelper.getKareshi();
+            Log.v("ジャンル",data.get("genre"));
+            //Toast.makeText(getActivity(), "洋", Toast.LENGTH_SHORT).show();
         }
     }
     public class chineseClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
+            DBHelper mDBHelper = new DBHelper(getActivity());
+            mDBHelper.putKareshi("genre","2");
+            Map<String,String> data = mDBHelper.getKareshi();
+            Log.v("ジャンル",data.get("genre"));
+            //Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
         }
     }
 /*

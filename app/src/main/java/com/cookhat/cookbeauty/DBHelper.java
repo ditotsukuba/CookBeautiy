@@ -410,7 +410,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Map<String,String>dataList = new HashMap<String, String>();
         String dbPath = mDatabasePath.getAbsolutePath();
         String sql_where = "id=1";
-        mDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READONLY);
+        mDatabase=SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READONLY);
         Cursor cursor = mDatabase.query("kareshi_data",null,sql_where,null,null,null,"id DESC",null);
         cursor.moveToFirst();
         dataList.put("id",cursor.getString(0));
@@ -429,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues v = new ContentValues();
 
 
-        String whereClause = "id= 1";
+        String whereClause = "id= ?";
         String whereArgs[] = new String[1];
         whereArgs[0] = Integer.toString(1);
         if(column.equals("id"))
