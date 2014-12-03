@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cookhat.cookbeauty.util.CustomAdapter;
 import com.cookhat.cookbeauty.util.SuggestAdapter;
@@ -59,7 +60,10 @@ public class AnimationFragment extends Fragment{
         View vi =inflater.inflate(R.layout.list_activity, container, false);
 
         //サジェストリストをどうにかする
-
+        TextView textdata = (TextView)vi.findViewById(R.id.suggest_name);
+        Map<String,String>kareshidata = mDbHelper.getKareshi();
+        String namedata = kareshidata.get("name") + "さんへの\nおすすめメニュー";
+        textdata.setText(namedata);
         Map<Integer,Map> suggest = mDbHelper.findSuggest("table_recipeLists",0);
         int s = suggest.size();
         String n_buf[]= new String[s];

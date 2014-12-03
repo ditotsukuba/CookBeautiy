@@ -168,7 +168,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
             }
+            Map<String,String> bf = getKareshi();
             //Log.v("ID:"+(String)data.get(i).get("id"),Double.toString(reco));
+            if(Integer.parseInt((String)data.get(i).get("genre")) == Integer.parseInt(bf.get("genre")))
+            {
+                if(reco>0)
+                {
+                    reco*=1.2;
+                }
+
+                else
+                {
+                    reco*=0.8;
+                }
+            }
             WriteDBRecommend(Integer.parseInt((String) data.get(i).get("id")), reco);
 
         }

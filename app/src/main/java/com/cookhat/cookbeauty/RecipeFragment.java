@@ -59,6 +59,7 @@ public class RecipeFragment extends Fragment {
         ImageView allergy = (ImageView)v.findViewById(R.id.allergy_view);
         allergy.setVisibility(View.INVISIBLE);
 
+
         //DB関連処理
         mDbHelper = new DBHelper(getActivity());
        // db = mDbHelper.getReadableDatabase();
@@ -81,7 +82,18 @@ public class RecipeFragment extends Fragment {
 
             //Log.v("test", rowData.get("name"));
         //}
-
+        //アレルギーが現れた！！
+        String allergy_db[] = rowData.get("allergy").split(",");
+        String allergy_kareshi[]=mDbHelper.getKareshi().get("allergy").split(",");
+        if(!(allergy_kareshi[0].equals("なし"))) {
+            for (int i = 0; i < allergy_db.length; i++) {
+                for (int j = 0; j < allergy_kareshi.length; j++) {
+                    if (allergy_db[i].equals(allergy_kareshi[j])) {
+                        allergy.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
         //RatingBar関連処理
         RatingBar ratingbar = (RatingBar)v.findViewById(R.id.ratingBar);
         ratingbar.setRating(Float.parseFloat(rowData.get("rating")));

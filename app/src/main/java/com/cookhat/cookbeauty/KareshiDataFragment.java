@@ -103,9 +103,10 @@ public class KareshiDataFragment extends Fragment {
         }
 
         // 好きなメニューが登録されていれば表示
-        if (kareshi_database.get("menu").equals("なし") || kareshi_database.get("menu").equals("")) {
+        if (kareshi_database.get("menu").equals("タップして入力してください") ||
+                kareshi_database.get("menu").equals("なし") || kareshi_database.get("menu").equals("")) {
             favorite_memu.setText("タップして入力してください");
-            //favorite_memu.setTextColor(getResources().getColor(R.color.gray));
+            favorite_memu.setTextColor(getResources().getColor(R.color.gray));
         }
         else {
             String menu_text = kareshi_database.get("menu");
@@ -118,6 +119,7 @@ public class KareshiDataFragment extends Fragment {
             */
             replace_text = menu_text;
             favorite_memu.setText(replace_text);
+            favorite_memu.setTextColor(getResources().getColor(R.color.black));
         }
 
 
@@ -303,6 +305,13 @@ public class KareshiDataFragment extends Fragment {
         });
 
         //好きなメニューを入力したらデータベースに格納
+        EditText favorite_menu_memo = (EditText)v.findViewById(R.id.kareshi_favorite_menu_memo);
+        if (favorite_menu_memo.getText().toString().equals("タップして入力してください"))
+            favorite_menu_memo.setSelectAllOnFocus(true);
+        else
+            favorite_menu_memo.setSelectAllOnFocus(false);
+
+
         favorite_memu.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -310,6 +319,7 @@ public class KareshiDataFragment extends Fragment {
                     DBHelper mDBHelper = new DBHelper(getActivity());
                     mDBHelper.putKareshi("menu",favorite_memu.getText().toString());
                 }
+
             }
 
         });
@@ -352,6 +362,7 @@ public class KareshiDataFragment extends Fragment {
             //Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 /*

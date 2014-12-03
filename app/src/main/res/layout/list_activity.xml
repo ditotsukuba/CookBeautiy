@@ -21,12 +21,13 @@
         -->
     </ListView>
 
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/Suggest_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="85dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="600dp"
         >
@@ -37,15 +38,17 @@
     </ListView>
 
     <TextView
-        android:layout_width="330dp"
-        android:layout_height="60dp"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
         android:textSize="25dp"
         android:text="彼へのおすすめメニュー"
         android:textColor="@color/red"
         android:id="@+id/suggest_name"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="600dp"/>
+
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="580dp"/>
 
 
 </FrameLayout>

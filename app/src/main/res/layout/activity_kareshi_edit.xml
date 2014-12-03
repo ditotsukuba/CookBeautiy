@@ -20,8 +20,9 @@
         android:id="@+id/kareshi_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="彼氏の名前"
+        android:text="彼氏の名前(8文字以内)"
         android:textSize="@dimen/midium_text_size_kareshi"
+        android:textColor="@color/red"
         android:layout_toRightOf="@id/guy"
          />
 
@@ -29,6 +30,7 @@
         android:id="@+id/edit_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:maxLength="8"
         android:layout_toRightOf="@id/guy"
         android:layout_below="@id/kareshi_name"
         />
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:text="好きなジャンル"
         android:textSize="@dimen/midium_text_size_kareshi"
+        android:textColor="@color/skyblue"
         android:layout_toRightOf="@id/guy"
         android:layout_below="@id/edit_name"
          />
@@ -84,6 +87,7 @@
             android:layout_height="wrap_content"
             android:text="好きなメニュー"
             android:textSize="@dimen/midium_text_size_kareshi"
+           android:textColor="@color/orange"
            android:layout_below="@id/edit_name"
            android:layout_toRightOf="@id/kareshi_favorite_genre"
            android:layout_toEndOf="@id/kareshi_favorite_genre"
@@ -118,6 +122,7 @@
         android:layout_height="wrap_content"
         android:text="アレルギー"
         android:textSize="@dimen/midium_text_size_kareshi"
+        android:textColor="@color/black"
         android:layout_toRightOf="@id/guy"
         android:layout_below="@id/favorite_genre_group"
          />

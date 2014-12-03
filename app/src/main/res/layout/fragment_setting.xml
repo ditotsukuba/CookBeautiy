@@ -1,24 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     tools:context="com.cookhat.cookbeauty.SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <Button
         android:id="@+id/button_reset"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="リセット"
-
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="80dp"
+        android:text="彼氏データリセット"
+        android:textSize="35dp"
+        android:background="@drawable/window_memo"
         />
 
     <Button
         android:id="@+id/button_ver"
-        android:layout_marginTop="180dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="version"
-        />
 
-</FrameLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="80dp"
+        android:textSize="35dp"
+        android:text="バージョン情報"
+        android:background="@drawable/window_rate"
+        android:layout_below="@id/button_reset" />
+
+</RelativeLayout>

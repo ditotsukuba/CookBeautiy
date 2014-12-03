@@ -1,13 +1,20 @@
 package com.cookhat.cookbeauty;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,32 +22,31 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Map;
+
 public class SettingFragment extends Fragment {
-    private  DBHelper mDbHelper;
+    private  DBHelper mDBHelper;
     private  PopupWindow mPopupWindow;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // 第３引数のbooleanは"container"にreturnするViewを追加するかどうか
         //trueにすると最終的なlayoutに再度、同じView groupが表示されてしまうのでfalseでOKらしい
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
-        // ボタンを取得して、ClickListenerをセット
-        return v;
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        Button button_r = (Button)getActivity().findViewById(R.id.button_reset);
-        Button button_v = (Button)getActivity().findViewById(R.id.button_ver);
 
-        button_r.setOnClickListener(new View.OnClickListener() {
+
+        Button button_reset = (Button) v.findViewById(R.id.button_reset);
+        Button button_version = (Button) v.findViewById(R.id.button_ver);
+
+        button_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View popup = getActivity().getLayoutInflater().inflate(R.layout.setting_popup,null);
-                Button button_y = (Button)popup.findViewById(R.id.popup_yes);
-                Button button_n = (Button)popup.findViewById(R.id.popup_no);
+                View popup = getActivity().getLayoutInflater().inflate(R.layout.setting_popup, null);
+                Button button_y = (Button) popup.findViewById(R.id.popup_yes);
+                Button button_n = (Button) popup.findViewById(R.id.popup_no);
                 final PopupWindow popupWindow = new PopupWindow(getActivity());
                 popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 popupWindow.setContentView(popup);
@@ -49,12 +55,27 @@ public class SettingFragment extends Fragment {
                 popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
 
                 button_y.setOnClickListener(new View.OnClickListener() {
-                             @Override
-                             public void onClick(View v) {
-                                 Toast.makeText(getActivity(), "リセットしました", Toast.LENGTH_SHORT).show();
-                                 popupWindow.dismiss();
+                    @Override
+                    public void onClick(View v) {
+                        mDBHelper = new DBHelper(getActivity());
+                        mDBHelper.createEmptyDataBase();
 
-                             }
+                        mDBHelper.putKareshi("name", "はじめ");
+                        mDBHelper.putKareshi("genre", "0");
+                        mDBHelper.putKareshi("menu", "");
+                        mDBHelper.putKareshi("allergy", "なし");
+                        Map<Integer, Map> columns = mDBHelper.findAll("table_recipeLists", 0, 0);
+                        int size = columns.size();
+                        for (int i = 1; i <= size; i++) {
+                            mDBHelper.WriteDBRate(i,0.0);
+                            mDBHelper.WriteDBMemo(i,"タップして入力してください");
+                        }
+
+
+                        Toast.makeText(getActivity(), "リセットしました", Toast.LENGTH_SHORT).show();
+                        popupWindow.dismiss();
+
+                    }
                 });
                 button_n.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -66,29 +87,59 @@ public class SettingFragment extends Fragment {
             }
 
         });
-button_v.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        View popup = getActivity().getLayoutInflater().inflate(R.layout.ver_popup,null);
-        Button button_y2 = (Button)popup.findViewById(R.id.popup_yes2);
-        final PopupWindow popupWindow = new PopupWindow(getActivity());
-        popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setContentView(popup);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+        button_version.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View popup = getActivity().getLayoutInflater().inflate(R.layout.ver_popup, null);
 
-    button_y2.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            popupWindow.dismiss();
+                final PopupWindow popupWindow = new PopupWindow(getActivity());
+                popupWindow.setWindowLayoutMode(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                popupWindow.setContentView(popup);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+                popupWindow.showAtLocation(v, Gravity.CENTER_VERTICAL, 0, 0);
+
+                String appversion = getVersionName(getActivity().getApplicationContext());
+                TextView app = (TextView)popup.findViewById(R.id.appversion);
+                app.setText("Version " + appversion);
+                app.setTextColor(Color.parseColor("#FFFFFF"));
+                /*
+                // Button button_y2 = (Button) popup.findViewById(R.id.popup_yes2);
+                button_y2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                    }
+                });*/
+            }
+        });
+
+        return v;
+    }
+
+    public static int getVersionCode(Context context){
+        PackageManager pm = context.getPackageManager();
+        int versionCode = 0;
+        try{
+            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
+            versionCode = packageInfo.versionCode;
+        }catch(PackageManager.NameNotFoundException e){
+            e.printStackTrace();
         }
-    });
-    }
-});
-
+        return versionCode;
     }
 
+    public static String getVersionName(Context context) {
+        PackageManager pm = context.getPackageManager();
+        String versionName = "";
+        try {
+            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }
 }
 
 

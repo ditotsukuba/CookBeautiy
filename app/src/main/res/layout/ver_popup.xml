@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     >
 
-    <TextView
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver1.01"
+        android:id="@+id/logo"
+        android:background="@color/white"
+        android:src="@drawable/cookbeauty_logo"/>
+
+    <TextView
+        android:id="@+id/appversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="build.gradleに書いてます"
         android:textSize="30sp"
+        android:layout_gravity="center"
         android:padding='8dp'/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/popup_yes2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="はいよ"
-            android:textSize="25sp" />
-    </LinearLayout>
 </LinearLayout>
