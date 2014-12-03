@@ -102,13 +102,15 @@
         android:id="@+id/kareshi_favorite_menu_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="memo"
+        android:text=""
         android:textSize="@dimen/midium_text_size_kareshi"
         android:layout_marginLeft="20dp"
         android:layout_below="@id/kareshi_favorite_menu"
         android:layout_toRightOf="@id/favorite_genre_group"
         android:layout_toEndOf="@id/favorite_genre_group"
-        />
+        android:layout_alignBottom="@+id/favorite_genre_group"
+        android:layout_alignRight="@+id/edit_name"
+        android:layout_alignEnd="@+id/edit_name" />
 
     <TextView
         android:id="@+id/kareshi_allergy"

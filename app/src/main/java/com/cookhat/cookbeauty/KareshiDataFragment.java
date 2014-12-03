@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.media.effect.Effect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -54,19 +56,21 @@ import android.util.Xml;
 
 public class KareshiDataFragment extends Fragment {
 
-        private DBHelper mDBHelper;
+    private DBHelper mDBHelper;
     private  Map<String,String> kareshi_database;
-    private CheckBox allergy_checkbox[];
+    //private CheckBox allergy_checkbox[];
     private Button allergy_button;
+    private EditText favorite_memu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         container.removeAllViews();
-        View v =inflater.inflate(R.layout.activity_kareshi_edit, container, false);
+        final View v =inflater.inflate(R.layout.activity_kareshi_edit, container, false);
 
         allergy_button = (Button) v.findViewById(R.id.allergyButton);
+        favorite_memu = (EditText) v.findViewById(R.id.kareshi_favorite_menu_memo);
 
         mDBHelper = new DBHelper(getActivity());
         mDBHelper.createEmptyDataBase();
@@ -90,7 +94,7 @@ public class KareshiDataFragment extends Fragment {
 
         // allergy がなければ "なし" を表示
         // あれば カンマで区切って表示
-        if (kareshi_database.get("allergy") == null)
+        if (kareshi_database.get("allergy").equals("なし") || kareshi_database.get("allergy").equals(""))
             allergy_button.setText("なし");
         else {
             String allergy_text = kareshi_database.get("allergy");
@@ -98,15 +102,29 @@ public class KareshiDataFragment extends Fragment {
             allergy_button.setText(replace_text);
         }
 
+        // 好きなメニューが登録されていれば表示
+        if (kareshi_database.get("menu").equals("なし") || kareshi_database.get("menu").equals("")) {
+            favorite_memu.setText("タップして入力してください");
+            //favorite_memu.setTextColor(getResources().getColor(R.color.gray));
+        }
+        else {
+            String menu_text = kareshi_database.get("menu");
+            String replace_text =menu_text.replaceAll("\n", ", ");
+            /*
+            if (replace_text.endsWith(",")) {   //最後のカンマを除去
+                int last = replace_text.lastIndexOf(",");
+                replace_text = replace_text.substring(0, last);
+            }
+            */
+            replace_text = menu_text;
+            favorite_memu.setText(replace_text);
+        }
+
 
         allergy_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-
-
-
 
                 //ポップアップの処理
                 View popup = getActivity().getLayoutInflater().inflate(R.layout.popup_allergy_list, null);
@@ -137,12 +155,13 @@ public class KareshiDataFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                //チェックボタンのidを map型 で格納
-                Map<Integer,String> dataMap = new HashMap<Integer, String>();
+                //チェックボタンのidを mapクラス で格納
+                /*Map<Integer,String> dataMap = new HashMap<Integer, String>();
                 for(int i=0;i<allergy_list.size();i++)
                 {
                     dataMap.put(i,allergy_list.get(i));
                 }
+                */
                 final Map<String,CheckBox>allergyCheckButtonList = new HashMap<String, CheckBox>();
                 allergyCheckButtonList.put(allergy_list.get(0), (CheckBox)popup.findViewById(R.id.allergy_ebi));
                 allergyCheckButtonList.put(allergy_list.get(1), (CheckBox)popup.findViewById(R.id.allergy_kani));
@@ -172,71 +191,49 @@ public class KareshiDataFragment extends Fragment {
                 allergyCheckButtonList.put(allergy_list.get(25), (CheckBox)popup.findViewById(R.id.allergy_butaniku));
                 allergyCheckButtonList.put(allergy_list.get(26), (CheckBox)popup.findViewById(R.id.allergy_toriniku));
 
-                allergy_checkbox = new CheckBox[allergy_list.size()];
-                String allergy_text[] = kareshi_database.get("allergy").split(",");
-
-
-                    for(int j=0; j<allergy_text.length;j++)
-                    {
-                        if(allergy_text[j].equals("なし")) {
-
-                        }
-                        else
-                        {
-                            CheckBox c = allergyCheckButtonList.get(allergy_text[j]);
-                            c.setChecked(true);
-                        }
+                //allergy_checkbox = new CheckBox[allergy_list.size()];
+                String allergy_text[] = mDBHelper.getKareshi().get("allergy").split(",");
+                for(int j=0; j<allergy_text.length;j++)
+                {
+                    if(allergy_text[j].equals("なし")) {
+                        //なにもしない
                     }
-
-
-
-
+                    else
+                    {
+                        CheckBox c = allergyCheckButtonList.get(allergy_text[j]);
+                        c.setChecked(true);
+                    }
+                }
 
                 accept_button.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-
-
                         String tempstr = "";
+                        for (int j=0; j<allergy_list.size(); j++) {
+                            String syokuhin = allergy_list.get(j);
+                            CheckBox c = allergyCheckButtonList.get(syokuhin);
 
-                            for (int j=0; j<allergy_list.size(); j++) {
-                                String syokuhin = allergy_list.get(j);
-                                CheckBox c = allergyCheckButtonList.get(syokuhin);
-
-                                if(c.isChecked()) {  // チェックされているとき
-                                    tempstr = tempstr + syokuhin + ",";
-
-                                }
+                            if(c.isChecked()) {  // チェックされているとき
+                                tempstr = tempstr + syokuhin + ",";
                             }
+                        }
 
-
-                        if(tempstr.equals(""))
+                        if(tempstr.equals("") || tempstr.equals("なし"))
                         {
                             tempstr = "なし";
                         }
-
-                        mDBHelper.putKareshi("allergy", tempstr);
-
-
-                        kareshi_database =  mDBHelper.getKareshi();
-                        String allergy_text[] = kareshi_database.get("allergy").split(",");
-                        String Button_output = new String();
-                        for(int j=0; j<allergy_text.length;j++)
-                        {
-                            if(j == (allergy_text.length -1))
-                            {
-                                Button_output += allergy_text[j];
-                            }
-                            else
-                            {
-                                Button_output += allergy_text[j] + ",";
+                        else{   //最後の","を除去
+                            if (tempstr.endsWith(",")) {
+                                int last = tempstr.lastIndexOf(",");
+                                tempstr = tempstr.substring(0, last);
                             }
                         }
-                        allergy_button.setText(Button_output);
+
+                        mDBHelper.putKareshi("allergy", tempstr);
+                        allergy_button.setText(tempstr);
+
                         popupWindow.dismiss();
-
-
 
                     }
                 });
@@ -260,30 +257,29 @@ public class KareshiDataFragment extends Fragment {
         RadioButton genre_chinese = (RadioButton)v.findViewById(R.id.chinese);
         String genre = kareshi_database.get("genre");
         if(genre.equals("0")){
-            Log.v("test","wa");
             genre_japanese.setChecked(true);
-            genre_chinese.setChecked(false);
             genre_europe.setChecked(false);
-
+            genre_chinese.setChecked(false);
         }else if(genre.equals("1")){
             genre_japanese.setChecked(false);
-            genre_chinese.setChecked(false);
             genre_europe.setChecked(true);
+            genre_chinese.setChecked(false);
         }else if(genre.equals("2")){
-
             genre_japanese.setChecked(false);
-            genre_chinese.setChecked(true);
             genre_europe.setChecked(false);
+            genre_chinese.setChecked(true);
         }
         genre_japanese.setOnClickListener(new japaneseClickListener());
-
         genre_europe.setOnClickListener(new europeClickListener());
-
         genre_chinese.setOnClickListener(new chineseClickListener());
-        //彼氏の名前を入力したらデータベースに格納
+
+
+        //彼氏の名前を表示
         final EditText boyfriend_name = (EditText)v.findViewById(R.id.edit_name);
         String name = kareshi_database.get("name");
         boyfriend_name.setText(name);
+
+        //彼氏の名前を入力したらデータベースに格納
         boyfriend_name.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -303,23 +299,19 @@ public class KareshiDataFragment extends Fragment {
 
                 return false;
             }
+
         });
-        boyfriend_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        //好きなメニューを入力したらデータベースに格納
+        favorite_memu.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                // フォーカスを受け取ったとき
-                if (hasFocus) {
-                    // ソフトキーボードを表示する
-                    inputMethodManager.showSoftInput(v, InputMethodManager.SHOW_FORCED);
-                }
-                // フォーカスが外れたとき
-                else {
-                    // ソフトキーボードを閉じる
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    Toast.makeText(getActivity(), "エンターで確定してください", Toast.LENGTH_SHORT).show();
+                if (hasFocus == false) {
+                    DBHelper mDBHelper = new DBHelper(getActivity());
+                    mDBHelper.putKareshi("menu",favorite_memu.getText().toString());
                 }
             }
+
         });
 
         return v;
@@ -361,40 +353,6 @@ public class KareshiDataFragment extends Fragment {
         }
     }
 
-
-/*
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            //setContentView(R.layout.main);
-
-            EditText editText = (EditText)findViewById(R.id.edit_name);
-            // テキストが変化した際のリスナーをセット
-            editText.addTextChangedListener(this);
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            //変更前
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            //変更直前
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            //変更後
-            //Toast.makeText(getActivity(), editable.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onPause(){
-            EditText editText = (EditText)findViewById(R.id.edit_name);
-            Toast.makeText(getActivity(), editText.toString(), Toast.LENGTH_SHORT).show();
-        }
-*/
 
 /*
     // TODO: Rename method, update argument and hook method into UI event
