@@ -2,6 +2,7 @@ package com.cookhat.cookbeauty;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.media.Rating;
@@ -35,8 +36,10 @@ public class RecipeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FrameActivity frame;
     private  DBHelper mDbHelper;
-    //private SQLiteDatabase db;
+    private SQLiteDatabase db;
     private int load_id = 0;
+    private int tap_button = 0;//0:Not button tap,1:button taped
+
     public RecipeFragment() {
         // Required empty public constructor
     }
@@ -62,7 +65,7 @@ public class RecipeFragment extends Fragment {
 
         //DB関連処理
         mDbHelper = new DBHelper(getActivity());
-       // db = mDbHelper.getReadableDatabase();
+        db = mDbHelper.getReadableDatabase();
 
 
         Map<Integer, Map> columns = mDbHelper.findAll("table_recipeLists", id, 0);
@@ -138,6 +141,7 @@ public class RecipeFragment extends Fragment {
         memo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tap_button = 0;
 
                 final View popup = getActivity().getLayoutInflater().inflate(R.layout.input_popup, null);
                 final PopupWindow popupWindow = new PopupWindow(getActivity());
@@ -151,27 +155,28 @@ public class RecipeFragment extends Fragment {
                 im =(InputMethodManager) frame.getSystemService(Context.INPUT_METHOD_SERVICE);
                 rl = (RelativeLayout)popup.findViewById(R.id.inputpopupwindow);
                 final EditText memo_data = (EditText)popup.findViewById(R.id.inputtextbox);
-                if(!rowData.get("memo").equals("タップして入力してください")) {
-                    memo_data.setText(rowData.get("memo"));
+                String m = mDbHelper.ReadDBMemo(load_id);
+                if(!m.equals("タップして入力してください")) {
+                    memo_data.setText(m);
                 }
                 final Button ok_button = (Button)popup.findViewById(R.id.editButton);
                 final Button cancel_button = (Button)popup.findViewById(R.id.editButton_c);
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        String data = memo_data.getText().toString();
-                        if(data.equals(""))
-                        {
-                            data = "タップして入力してください" ;
-                        }
-                        mDbHelper.WriteDBMemo(load_id,data);
-                        if(!data.equals("タップして入力してください")) {
-                            memoText.setText(data);
-                            memoText.setTextColor(Color.parseColor("#000000"));
-                        }
-                        else{
-                            memoText.setText("タップして入力してください");
-                            memoText.setTextColor(Color.parseColor("#808080"));
+                        if (tap_button == 0) {
+                            String data = memo_data.getText().toString();
+                            if (data.equals("")) {
+                                data = "タップして入力してください";
+                            }
+                            mDbHelper.WriteDBMemo(load_id, data);
+                            if (!data.equals("タップして入力してください")) {
+                                memoText.setText(data);
+                                memoText.setTextColor(Color.parseColor("#000000"));
+                            } else {
+                                memoText.setText("タップして入力してください");
+                                memoText.setTextColor(Color.parseColor("#808080"));
+                            }
                         }
                     }
                 });
@@ -196,7 +201,7 @@ public class RecipeFragment extends Fragment {
                             memoText.setTextColor(Color.parseColor("#808080"));
                         }
 
-
+                        tap_button = 1;
                         popupWindow.dismiss();
                     }
                 });
@@ -204,6 +209,7 @@ public class RecipeFragment extends Fragment {
                 cancel_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        tap_button = 1;
                         popupWindow.dismiss();
                     }
                 });

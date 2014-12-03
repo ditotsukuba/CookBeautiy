@@ -11,6 +11,8 @@ import android.widget.Button;
 
 public class TitleActivity extends Activity {
     /** Called when the activity is first created. */
+    private int touch_flg = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,11 +21,14 @@ public class TitleActivity extends Activity {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Intent intent = new Intent(getApplication(), FrameActivity.class);
-        startActivity(intent);
-        Log.v("Test1:","passed.");
-        TitleActivity.this.finish();
-        Log.v("Test2:","passed.");
+        if(touch_flg == 0) {
+            Intent intent = new Intent(getApplication(), FrameActivity.class);
+            startActivity(intent);
+
+            TitleActivity.this.finish();
+            touch_flg = 1;
+        }
+
         return super.onTouchEvent(event);
     }
     }

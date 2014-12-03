@@ -49,6 +49,20 @@ public class DBHelper extends SQLiteOpenHelper {
         mDatabase.update("table_recipeLists", f, whereClause, whereArgs);
     }
 
+    public String ReadDBMemo(int id)
+    {
+        String dbPath = mDatabasePath.getAbsolutePath();
+        mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
+        String sql = "id=?";
+        String whereArgs[] = new String[1];
+        whereArgs[0] = Integer.toString(id);
+        Cursor cur =  mDatabase.query("table_recipeLists", null, sql, whereArgs, null, null,  "id DESC",null);
+        cur.moveToFirst();
+        String memo = cur.getString(11);
+        return memo;
+    }
+
+
     public void calcRecommend()
     {
         int size = 0;
