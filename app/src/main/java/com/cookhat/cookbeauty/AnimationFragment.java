@@ -62,7 +62,12 @@ public class AnimationFragment extends Fragment{
         //サジェストリストをどうにかする
         TextView textdata = (TextView)vi.findViewById(R.id.suggest_name);
         Map<String,String>kareshidata = mDbHelper.getKareshi();
+
         String namedata = kareshidata.get("name") + "さんへの\nおすすめメニュー";
+        if(namedata.equals("さんへの\nおすすめメニュー"))
+        {
+            namedata = "彼氏へのおすすめメニュー";
+        }
         textdata.setText(namedata);
         Map<Integer,Map> suggest = mDbHelper.findSuggest("table_recipeLists",0);
         int s = suggest.size();
@@ -72,12 +77,38 @@ public class AnimationFragment extends Fragment{
         Iterator ite = suggest.keySet().iterator();
         int counter = 0;
         ArrayList<String> SuggestList = new ArrayList<String>();
+        boolean reco_flag = true;
+        String bf_allergy[] = mDbHelper.getKareshi().get("allergy").split(",");
+
         while(ite.hasNext()){
+
+            reco_flag = true;
+
+            if(counter == 5 )
+                break;
+
             Object o = ite.next();
-            k[counter] = Integer.parseInt((String) suggest.get(o).get("id"));
-            n_buf[counter] =  (String)suggest.get(o).get("name");
-            rec[counter] = Double.parseDouble((String) suggest.get(o).get("recommend"));
-            counter++;
+            String database_allergy[] = ((String)suggest.get(o).get("allergy")).split(",");
+            for(int m=0;m<database_allergy.length;m++) {
+
+                for (int l = 0; l < bf_allergy.length; l++) {
+
+                    if (database_allergy[m].equals(bf_allergy[l])) {
+                        reco_flag = false;
+                        break;
+                    }
+                }
+            }
+
+
+            if(reco_flag) {
+                k[counter] = Integer.parseInt((String) suggest.get(o).get("id"));
+                n_buf[counter] = (String) suggest.get(o).get("name");
+                rec[counter] = Double.parseDouble((String) suggest.get(o).get("recommend"));
+                counter++;
+            }
+
+
         }
 
         final int k_pos[] = k;
@@ -85,6 +116,7 @@ public class AnimationFragment extends Fragment{
         for(int i=0;i<counter;i++){
             SuggestList.add(n_buf[i]);
         }
+
         SuggestAdapter mAdap = new SuggestAdapter(this.getActivity().getApplicationContext(), 0, SuggestList);
         ListView l = (ListView)vi.findViewById(R.id.Suggest_list);
         l.setAdapter(mAdap);

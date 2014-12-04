@@ -279,7 +279,10 @@ public class KareshiDataFragment extends Fragment {
         //彼氏の名前を表示
         final EditText boyfriend_name = (EditText)v.findViewById(R.id.edit_name);
         String name = kareshi_database.get("name");
-        boyfriend_name.setText(name);
+
+            boyfriend_name.setText(name);
+
+
 
         //彼氏の名前を入力したらデータベースに格納
         boyfriend_name.setOnKeyListener(new View.OnKeyListener() {

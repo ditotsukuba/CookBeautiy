@@ -190,12 +190,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 {
                     reco*=1.2;
                 }
-
+                else if(reco == 0)
+                {
+                    reco += 10;
+                }
                 else
                 {
                     reco*=0.8;
                 }
             }
+
             WriteDBRecommend(Integer.parseInt((String) data.get(i).get("id")), reco);
 
         }
@@ -542,16 +546,21 @@ public class DBHelper extends SQLiteOpenHelper {
         String dbPath = mDatabasePath.getAbsolutePath();
 
         String sql_where = null;
-        if(id>0) sql_where = "id=" + String.valueOf(id);
+        if(id>0) sql_where = "id=" + String.valueOf(id) ;
 
         //try {
         mDatabase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READONLY);
-        Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "recommend DESC",Integer.toString(5));
+        //Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "recommend DESC",Integer.toString(5));
+        Cursor cursor = mDatabase.query(table, null, sql_where, null, null, null,  "recommend DESC",null);
+        String allergy_db[] = getKareshi().get("allergy").split(",");
 
         // 参照先を先頭に
         boolean isEof = cursor.moveToFirst();
         int i = 0;
         while (isEof) {
+
+
+
             Map<String, String> rowData = new HashMap<String, String>();
 
             rowData.put("id", cursor.getString(0));
@@ -566,7 +575,9 @@ public class DBHelper extends SQLiteOpenHelper {
             rowData.put("pain",cursor.getString(8));
             rowData.put("recommend",cursor.getString(9));
             rowData.put("cooked",cursor.getString(10));
-
+            rowData.put("memo",cursor.getString(11));
+            rowData.put("ingredients",cursor.getString(12));
+            rowData.put("allergy",cursor.getString(13));
 
 
             dataList.put(i, rowData);
