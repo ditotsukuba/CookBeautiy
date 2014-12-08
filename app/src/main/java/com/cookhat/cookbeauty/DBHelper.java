@@ -134,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                 reco_buf += 1.0;
                             }
                         }
-                        reco_buf *= 2.0;
+                        reco_buf *= 1.5;
 
 
                     }
